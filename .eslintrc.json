@@ -7,11 +7,23 @@
     "sourceType": "module",
     "ecmaVersion": 2018,
     "ecmaFeatures": {
+      "modules": true,
       "jsx": true
     }
   },
   "extends": "airbnb-base",
+  "plugins": [
+    "react"
+  ],
+  "settings": {
+    "react": {
+      "pragma": "h"
+    }
+  },
   "rules": {
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "no-empty": 0,
     "max-len": 0,
     "no-bitwise": 0,
     "no-restricted-properties": 0,
