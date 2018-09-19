@@ -1,7 +1,7 @@
 import extend from 'extend';
-import dockConfig from './dock-config';
-import resolveLayout, { resolveSettings } from './dock-settings-resolver';
-import { rectToPoints, pointsToRect } from '../geometry/util';
+import dockConfig from './config';
+import resolveLayout, { resolveSettings } from './settings-resolver';
+import { rectToPoints, pointsToRect } from '../../geometry/util';
 
 function validateComponent(component) {
   const expectedProperties = ['resize'];
