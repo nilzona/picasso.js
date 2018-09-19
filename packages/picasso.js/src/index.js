@@ -74,6 +74,12 @@ function pic(config = {}, registries = {}) {
      * @private
      */
     symbol: registry(registries.symbol),
+    /**
+     * Layout registry
+     * @type {registry}
+     * @private
+     */
+    layout: registry(registries.layout),
     // -- misc --
     /**
      * log some some stuff

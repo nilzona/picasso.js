@@ -6,6 +6,7 @@ import dataset from './data/dataset';
 import field from './data/field';
 import formatter from './formatter';
 import interaction from './interaction';
+import layout from './layout';
 
 export {
   chart,
@@ -16,5 +17,6 @@ export {
   dataset,
   field,
   component,
-  interaction
+  interaction,
+  layout
 };

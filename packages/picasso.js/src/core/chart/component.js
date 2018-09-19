@@ -1,41 +1,50 @@
+import { Component } from 'preact';
 
-/*
-import { h, render, Component } from 'preact';
-import synthesize from './synthesize';
+function callLifeCycleMethod(method, definition, instance, ...args) {
+  if (definition[method]) {
+    definition[method].call(instance, ...args);
+  }
+}
 
-class PicassoChart extends Component {
-  constructor({ definition, context }) {
+class PicassoComponent extends Component {
+  constructor({ definition, context, instance }) {
     super();
-    const components = synthesize(definition);
-    this.components = components;
+    this.definition = definition;
     this.context = context;
+    this.instance = instance;
   }
 
-  /*
-  componentWillMount() {}
-  componentDidMount() {}
-  componentWillUnmount() {}
-  componentWillReceiveProps() {}
+  componentWillMount() {
+    callLifeCycleMethod('componentWillMount', this.definition, this.instance);
+  }
 
-  // shouldComponentUpdate() {} // expose this?
-  componentWillUpdate() {}
-  componentDidUpdate() {}
-  */
-/*
-  render() {
-    return <div>{this.components}</div>;
+  componentDidMount() {
+    callLifeCycleMethod('componentDidMount', this.definition, this.instance);
+  }
+
+  shouldComponentUpdate(...args) {
+    callLifeCycleMethod('shouldComponentUpdate', this.definition, this.instance, ...args);
+  }
+
+  componentWillReceiveProps(...args) {
+    callLifeCycleMethod('componentWillReceiveProps', this.definition, this.instance, ...args);
+  }
+
+  componentWillUpdate(...args) {
+    callLifeCycleMethod('componentWillUpdate', this.definition, this.instance, ...args);
+  }
+
+  componentDidUpdate(...args) {
+    callLifeCycleMethod('componentDidUpdate', this.definition, this.instance, ...args);
+  }
+
+  componentWillUnmount() {
+    callLifeCycleMethod('componentWillUnmount', this.definition, this.instance);
   }
 }
 
-function chartFn(definition, context) {
-  let preactInstance;
-  let ref = c => preactInstance = c;
-  const element = definition.element;
-  if (element) {
-    render(<PicassoChart ref={ref} definition={definition} context={context} />, element);
-  }
-  return preactInstance;
+function createComponent(definition, context) {
+  
 }
 
-export default chartFn;
-*/
+export default PicassoComponent;
