@@ -1,6 +1,6 @@
 import extend from 'extend';
 
-import createDockLayout from '../dock-layout/dock-layout';
+import createDockLayout from '../layout/dock';
 import {
   detectTouchSupport,
   isValidTapEvent
