@@ -3703,102 +3703,6 @@
         }
       }
     },
-    "dock-layout-settings": {
-      "kind": "object",
-      "entries": {
-        "size": {
-          "description": "Physical size. Defaults to the container element.",
-          "optional": true,
-          "kind": "object",
-          "entries": {
-            "width": {
-              "description": "Width in pixels",
-              "optional": true,
-              "type": "number"
-            },
-            "height": {
-              "description": "Height in pixels",
-              "optional": true,
-              "type": "number"
-            }
-          }
-        },
-        "logicalSize": {
-          "description": "Logical size",
-          "optional": true,
-          "kind": "object",
-          "entries": {
-            "width": {
-              "description": "Width in pixels",
-              "optional": true,
-              "type": "number"
-            },
-            "height": {
-              "description": "Height in pixels",
-              "optional": true,
-              "type": "number"
-            },
-            "preserveAspectRatio": {
-              "description": "If true, takes the smallest ratio of width/height between logical and physical size ( physical / logical )",
-              "optional": true,
-              "defaultValue": false,
-              "type": "boolean"
-            },
-            "align": {
-              "description": "Normalized value between 0-1. Defines how the space around the scaled axis is spread in the container, with 0.5 meaning the spread is equal on both sides. Only applicable if preserveAspectRatio is set to true",
-              "optional": true,
-              "defaultValue": 0.5,
-              "type": "number"
-            }
-          }
-        },
-        "center": {
-          "description": "Define how much space the center dock area requires",
-          "optional": true,
-          "kind": "object",
-          "entries": {
-            "minWidthRatio": {
-              "description": "Value between 0 and 1",
-              "optional": true,
-              "defaultValue": 0.5,
-              "type": "number"
-            },
-            "minHeightRatio": {
-              "description": "Value between 0 and 1",
-              "optional": true,
-              "defaultValue": 0.5,
-              "type": "number"
-            },
-            "minWidth": {
-              "description": "Width in pixels",
-              "optional": true,
-              "type": "number"
-            },
-            "minHeight": {
-              "description": "Height in pixels",
-              "optional": true,
-              "type": "number"
-            }
-          }
-        },
-        "layoutModes": {
-          "description": "Dictionary with named sizes",
-          "optional": true,
-          "type": "object",
-          "generics": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "{width:number"
-            },
-            {
-              "type": "height:number}"
-            }
-          ]
-        }
-      }
-    },
     "rect": {
       "kind": "object",
       "entries": {
@@ -3901,6 +3805,102 @@
         "d": {
           "description": "Path definition",
           "type": "string"
+        }
+      }
+    },
+    "dock-layout-settings": {
+      "kind": "object",
+      "entries": {
+        "size": {
+          "description": "Physical size. Defaults to the container element.",
+          "optional": true,
+          "kind": "object",
+          "entries": {
+            "width": {
+              "description": "Width in pixels",
+              "optional": true,
+              "type": "number"
+            },
+            "height": {
+              "description": "Height in pixels",
+              "optional": true,
+              "type": "number"
+            }
+          }
+        },
+        "logicalSize": {
+          "description": "Logical size",
+          "optional": true,
+          "kind": "object",
+          "entries": {
+            "width": {
+              "description": "Width in pixels",
+              "optional": true,
+              "type": "number"
+            },
+            "height": {
+              "description": "Height in pixels",
+              "optional": true,
+              "type": "number"
+            },
+            "preserveAspectRatio": {
+              "description": "If true, takes the smallest ratio of width/height between logical and physical size ( physical / logical )",
+              "optional": true,
+              "defaultValue": false,
+              "type": "boolean"
+            },
+            "align": {
+              "description": "Normalized value between 0-1. Defines how the space around the scaled axis is spread in the container, with 0.5 meaning the spread is equal on both sides. Only applicable if preserveAspectRatio is set to true",
+              "optional": true,
+              "defaultValue": 0.5,
+              "type": "number"
+            }
+          }
+        },
+        "center": {
+          "description": "Define how much space the center dock area requires",
+          "optional": true,
+          "kind": "object",
+          "entries": {
+            "minWidthRatio": {
+              "description": "Value between 0 and 1",
+              "optional": true,
+              "defaultValue": 0.5,
+              "type": "number"
+            },
+            "minHeightRatio": {
+              "description": "Value between 0 and 1",
+              "optional": true,
+              "defaultValue": 0.5,
+              "type": "number"
+            },
+            "minWidth": {
+              "description": "Width in pixels",
+              "optional": true,
+              "type": "number"
+            },
+            "minHeight": {
+              "description": "Height in pixels",
+              "optional": true,
+              "type": "number"
+            }
+          }
+        },
+        "layoutModes": {
+          "description": "Dictionary with named sizes",
+          "optional": true,
+          "type": "object",
+          "generics": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "{width:number"
+            },
+            {
+              "type": "height:number}"
+            }
+          ]
         }
       }
     },
