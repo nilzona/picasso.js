@@ -1,52 +1,64 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import extend from 'extend';
 
-function callLifeCycleMethod(method, definition, instance, ...args) {
-  if (definition[method]) {
-    definition[method].call(instance, ...args);
-  }
-}
+function componentInstance(definition, chart) {
+  const { context } = definition;
+  const { registries } = context;
 
-function componentInstance(definition, context, chart) {
-  const compInstance = extend({ chart }, definition);
+  const compInstance = extend({}, definition);
+  compInstance.chart = chart;
+
+  // callback methods
+  compInstance.callComponentMethod = (method, instanceDefinition, componentDefinition, instance, ...args) => {
+    if (instanceDefinition && instanceDefinition[method]) {
+      instanceDefinition[method].call(instance, ...args);
+    }
+  };
+
   return compInstance;
 }
 
 class ChartComponent extends Component {
-  constructor({ definition, context, chart }) {
+  constructor({ instanceDefinition, root }) {
     super();
-    this.definition = definition;
-    this.context = context;
-    this.instance = componentInstance(definition, context, chart);
-    this.chartInstance = chart;
+    this.definition = instanceDefinition;
+    this.instance = componentInstance(instanceDefinition, root);
+    this.root = root;
   }
 
   componentWillMount() {
-    callLifeCycleMethod('componentWillMount', this.definition, this.instance);
+    this.instance.callComponentMethod('componentWillMount', this.definition, this.instance);
   }
 
   componentDidMount() {
-    callLifeCycleMethod('componentDidMount', this.definition, this.instance);
+    this.instance.callComponentMethod('componentDidMount', this.definition, this.instance);
   }
 
   shouldComponentUpdate(...args) {
-    callLifeCycleMethod('shouldComponentUpdate', this.definition, this.instance, ...args);
+    this.instance.callComponentMethod('shouldComponentUpdate', this.definition, this.instance, ...args);
   }
 
   componentWillReceiveProps(...args) {
-    callLifeCycleMethod('componentWillReceiveProps', this.definition, this.instance, ...args);
+    this.instance.callComponentMethod('componentWillReceiveProps', this.definition, this.instance, ...args);
   }
 
   componentWillUpdate(...args) {
-    callLifeCycleMethod('componentWillUpdate', this.definition, this.instance, ...args);
+    this.instance.callComponentMethod('componentWillUpdate', this.definition, this.instance, ...args);
   }
 
   componentDidUpdate(...args) {
-    callLifeCycleMethod('componentDidUpdate', this.definition, this.instance, ...args);
+    this.instance.callComponentMethod('componentDidUpdate', this.definition, this.instance, ...args);
   }
 
   componentWillUnmount() {
-    callLifeCycleMethod('componentWillUnmount', this.definition, this.instance);
+    this.instance.callComponentMethod('componentWillUnmount', this.definition, this.instance);
+  }
+
+  render() { // props, state
+    if (!this.definition) {
+      return <div>No definition</div>;
+    }
+    return <div>This is a chart component</div>;
   }
 }
 

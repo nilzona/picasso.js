@@ -1,6 +1,5 @@
 import { render } from 'preact';
 import extend from 'extend';
-// import themeFn from '../theme';
 import synthesize from './synthesize';
 
 function updateChart(/* {  data, settings} */) {
@@ -8,22 +7,13 @@ function updateChart(/* {  data, settings} */) {
 }
 
 function compose(definition) {
-  const {
-    element,
-    data = [],
-    settings = {},
-    context
-  } = definition;
-  // const { registries, logger } = context;
-  // const theme = themeFn(context.style, context.palettes);
+  const root = extend({}, definition);
+  root.update = updateChart;
 
-  const instance = extend({}, definition);
-  instance.update = updateChart;
+  const vdom = synthesize(definition, root);
 
-  const vdom = synthesize(settings, context, instance);
-
-  render(vdom, element);
-  return instance;
+  render(vdom, definition.element);
+  return root;
 }
 
 export default compose;

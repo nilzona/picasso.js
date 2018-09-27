@@ -4,6 +4,7 @@ import about from './about';
 
 import {
   chart,
+  compose,
   renderer
 } from './core';
 
@@ -134,6 +135,12 @@ function pic(config = {}, registries = {}) {
    * @returns {chart}
    */
   picassojs.chart = definition => chart(definition, {
+    registries: regis,
+    logger,
+    style: config.style,
+    palettes: config.palettes
+  });
+  picassojs.compose = definition => compose(definition, {
     registries: regis,
     logger,
     style: config.style,
