@@ -187,11 +187,11 @@ function chartFn(definition, context) {
         hidden: []
       };
     }
-    const createDockLayout = registries.layout('dock');
-    const dockLayout = createDockLayout(settings.dockLayout);
-    components.forEach((c) => { dockLayout.addComponent(c.instance, c.key); });
+    const dockLayout = registries.layout('dock');
+    const dock = dockLayout(settings.dockLayout);
+    components.forEach((c) => { dock.addComponent(c.instance, c.key); });
 
-    const { visible, hidden } = dockLayout.layout(element);
+    const { visible, hidden } = dock.layout(element);
     return {
       visible: visible.map(v => findComponent(v)),
       hidden: hidden.map(h => findComponent(h))
