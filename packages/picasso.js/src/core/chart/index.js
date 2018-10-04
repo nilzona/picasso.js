@@ -1,5 +1,6 @@
 import extend from 'extend';
 
+import createDockLayout from '../dock-layout/dock-layout';
 import {
   detectTouchSupport,
   isValidTapEvent
@@ -181,17 +182,10 @@ function chartFn(definition, context) {
   };
 
   const layout = (components) => {
-    if (!components || components.length === 0) {
-      return {
-        visible: [],
-        hidden: []
-      };
-    }
-    const dockLayout = registries.layout('dock');
-    const dock = dockLayout(settings.dockLayout);
-    components.forEach((c) => { dock.addComponent(c.instance, c.key); });
+    const dockLayout = createDockLayout(settings.dockLayout);
+    components.forEach((c) => { dockLayout.addComponent(c.instance, c.key); });
 
-    const { visible, hidden } = dock.layout(element);
+    const { visible, hidden } = dockLayout.layout(element);
     return {
       visible: visible.map(v => findComponent(v)),
       hidden: hidden.map(h => findComponent(h))
