@@ -43,10 +43,10 @@ const wrap = (userDef, context) => {
   keys.reduce((acc, curr) => {
     acc[curr] = (...args) => {
       if (typeof userInstance[curr] === 'function') {
-        return userInstance[curr].call(userInstance, args);
+        return userInstance[curr].call(userInstance, ...args);
       }
       if (typeof componentInstance[curr] === 'function') {
-        return componentInstance[curr].call(componentInstance, args);
+        return componentInstance[curr].call(componentInstance, ...args);
       }
       return undefined;
     };
