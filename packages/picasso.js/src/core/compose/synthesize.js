@@ -17,6 +17,8 @@ const lifeCycle = [
 const otherMethods = [
   'resize'
 ];
+const methods = [...lifeCycle, ...otherMethods];
+
 const wrap = (userDef, context) => {
   const { registries } = context;
   if (!userDef.type && userDef.components) {
@@ -26,7 +28,7 @@ const wrap = (userDef, context) => {
   const componentDef = registries.component(userDef.type);
   const userInstance = extend({}, userDef);
   const componentInstance = extend({}, componentDef);
-  const keys = [...new Set([...lifeCycle, ...otherMethods, ...Object.keys(componentInstance), ...Object.keys(userInstance)])];
+  const keys = [...new Set([...methods, ...Object.keys(componentInstance), ...Object.keys(userInstance)])];
   const wrappedInstance = {
     __children__: [],
     __addChild(c) {
@@ -46,7 +48,7 @@ const wrap = (userDef, context) => {
     if (userType !== 'undefined' && componentType !== 'undefined' && userType !== componentType) {
       throw new Error(`Inconsistency userType:${userType} componentType:${componentType}`);
     }
-    if (userType === 'function' || componentType === 'function') {
+    if (methods.indexOf(curr) > -1 || userType === 'function' || componentType === 'function') {
       acc[curr] = (...args) => {
         if (typeof userInstance[curr] === 'function') {
           return userInstance[curr].call(userInstance, ...args);
@@ -56,8 +58,9 @@ const wrap = (userDef, context) => {
         }
         return undefined;
       };
+    } else {
+      acc[curr] = userInstance[curr] || componentInstance[curr];
     }
-    acc[curr] = userInstance[curr] || componentInstance[curr];
     return acc;
   }, wrappedInstance);
   return wrappedInstance;
