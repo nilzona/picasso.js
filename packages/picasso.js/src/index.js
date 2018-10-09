@@ -33,7 +33,6 @@ function usePlugin(plugin, options = {}, api) {
 
 function pic(config = {}, registries = {}) {
   const logger = loggerFn(config.logger);
-
   /**
    * @lends picassojs
    */

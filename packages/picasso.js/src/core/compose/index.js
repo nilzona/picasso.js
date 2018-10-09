@@ -1,6 +1,6 @@
 import { render } from 'preact';
 import extend from 'extend';
-import synthesize from './synthesize';
+import synthesize, { wrap } from './synthesize';
 
 import componentRegistry from '../component';
 
@@ -16,9 +16,9 @@ function compose(composeDefinition, context) {
   composeDefinition.type = 'root';
   const root = extend({ element, data }, settings);
   root.update = updateChart;
-
-  const vdom = synthesize(root, context, root);
-
+  const { wrappedInstance } = wrap(root, context);
+  const vdom = synthesize(root, context, wrappedInstance);
+  console.log(wrappedInstance.__children__[0])
   render(vdom, element);
   return root;
 }
