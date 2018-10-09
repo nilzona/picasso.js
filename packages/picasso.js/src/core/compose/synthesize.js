@@ -41,15 +41,23 @@ const wrap = (userDef, context) => {
     }
   };
   keys.reduce((acc, curr) => {
-    acc[curr] = (...args) => {
-      if (typeof userInstance[curr] === 'function') {
-        return userInstance[curr].call(userInstance, ...args);
-      }
-      if (typeof componentInstance[curr] === 'function') {
-        return componentInstance[curr].call(componentInstance, ...args);
-      }
-      return undefined;
-    };
+    const userType = typeof userInstance[curr];
+    const componentType = typeof componentInstance[curr];
+    if (userType !== 'undefined' && componentType !== 'undefined' && userType !== componentType) {
+      throw new Error(`Inconsistency userType:${userType} componentType:${componentType}`);
+    }
+    if (userType === 'function' || componentType === 'function') {
+      acc[curr] = (...args) => {
+        if (typeof userInstance[curr] === 'function') {
+          return userInstance[curr].call(userInstance, ...args);
+        }
+        if (typeof componentInstance[curr] === 'function') {
+          return componentInstance[curr].call(componentInstance, ...args);
+        }
+        return undefined;
+      };
+    }
+    acc[curr] = userInstance[curr] || componentInstance[curr];
     return acc;
   }, wrappedInstance);
   return wrappedInstance;
