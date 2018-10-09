@@ -1,4 +1,4 @@
-import render from '../rect';
+import render from '../Rect';
 
 describe('rect', () => {
   describe('render', () => {

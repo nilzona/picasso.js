@@ -1,58 +1,47 @@
 import { h, Component } from 'preact';
+import ContextualRenderer from './ContextualRenderer';
+import createRendererBox from '../../web/renderer/renderer-box';
 // import mapDeprecated from './mapDeprecated';
 
 class ChartComponent extends Component {
-  constructor({ wrappedInstance, renderer }) {
+  constructor({ instance }) {
     super();
-    this.wrappedInstance = wrappedInstance;
-    this.renderer = renderer;
-    this.wrappedInstance.resize();
+    this.instance = instance;
+    this.resize();
   }
 
-  render(props) { // props, state
-    if (this.wrappedInstance.render) {
-      const nodes = this.wrappedInstance.render();
-      this.renderer.render(nodes);
-      // this.currentNodes = nodes;
+  resize(rect) {
+    if (rect) {
+      const newRect = createRendererBox(rect);
+      if (JSON.stringify(rect) !== JSON.stringify(newRect)) {
+        this.rect = newRect;
+      }
+    } else {
+      this.rect = {
+        x: 0,
+        y: 0,
+        width: 50,
+        height: 50,
+        margin: { left: 0 },
+        scaleRatio: { x: 1, y: 1 }
+      };
     }
-    return (
-    <div>
-      {props.children}
-    </div>
-    );
+    this.instance.setRect(this.rect);
+    return this.rect;
+  }
+
+  render({ context, children }) { // props, state
+    if (children && children[0]) {
+      return <div>{children}</div>;
+    }
+    let nodes;
+    if (this.instance.render) {
+      nodes = this.instance.render();
+      const ctx = { renderContext: context.ctxRenderer || 'svg' };
+      return <ContextualRenderer ctx={ctx} rect={this.rect} nodes={nodes} />;
+    }
+    return undefined;
   }
 }
 
 export default ChartComponent;
-
-/*
-
-componentWillMount() {
-    this.callComponentMethod('componentWillMount');
-  }
-
-  componentDidMount() {
-    this.callComponentMethod('componentDidMount');
-  }
-
-  shouldComponentUpdate(...args) {
-    this.callComponentMethod('shouldComponentUpdate', ...args);
-  }
-
-  componentWillReceiveProps(...args) {
-    this.callComponentMethod('componentWillReceiveProps', ...args);
-  }
-
-  componentWillUpdate(...args) {
-    this.callComponentMethod('componentWillUpdate', ...args);
-  }
-
-  componentDidUpdate(...args) {
-    this.instance.callComponentMethod('componentDidUpdate', ...args);
-  }
-
-  componentWillUnmount() {
-    this.instance.callComponentMethod('componentWillUnmount');
-  }
-
-*/

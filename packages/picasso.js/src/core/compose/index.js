@@ -1,26 +1,31 @@
 import { render } from 'preact';
 import extend from 'extend';
-import synthesize, { wrap } from './synthesize';
+import synthesize from './synthesize';
 
 import componentRegistry from '../component';
 
-const rootComponent = {};
-componentRegistry('root', rootComponent);
+const layoutComponent = {};
+componentRegistry('layout', layoutComponent);
 
-function updateChart(/* {  data, settings} */) {
+function update(/* {  data, settings} */) {
 
 }
 
 function compose(composeDefinition, context) {
   const { element, data, settings } = composeDefinition;
-  composeDefinition.type = 'root';
-  const root = extend({ element, data }, settings);
-  root.update = updateChart;
-  const { wrappedInstance } = wrap(root, context);
-  const vdom = synthesize(root, context, wrappedInstance);
-  console.log(wrappedInstance.__children__[0])
+  const rootInstance = extend({
+    element,
+    data,
+    update,
+    type: 'layout'
+  }, settings);
+
+  const { instance, vdom } = synthesize(rootInstance, context);
+
+  instance.layoutComponents();
+
   render(vdom, element);
-  return root;
+  return rootInstance;
 }
 
 export default compose;

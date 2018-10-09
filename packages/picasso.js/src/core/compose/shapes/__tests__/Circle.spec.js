@@ -1,4 +1,4 @@
-import render from '../circle';
+import render from '../Circle';
 
 describe('circle', () => {
   describe('render', () => {

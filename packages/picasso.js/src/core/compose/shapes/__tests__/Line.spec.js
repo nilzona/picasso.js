@@ -1,4 +1,4 @@
-import render from '../line';
+import render from '../Line';
 
 describe('line', () => {
   describe('render', () => {

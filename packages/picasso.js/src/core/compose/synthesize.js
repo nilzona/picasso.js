@@ -1,5 +1,4 @@
 import { h } from 'preact';
-
 import extend from 'extend';
 import ChartComponent from './ChartComponent';
 
@@ -19,16 +18,26 @@ const otherMethods = [
   'resize'
 ];
 const wrap = (userDef, context) => {
-  const { registries, ctxRenderer } = context;
+  const { registries } = context;
+  if (!userDef.type && userDef.components) {
+    // assume layout type
+    userDef.type = 'layout';
+  }
   const componentDef = registries.component(userDef.type);
   const userInstance = extend({}, userDef);
   const componentInstance = extend({}, componentDef);
-  const renderer = ctxRenderer || registries.renderer(userInstance.renderer || componentInstance.renderer)();
   const keys = [...new Set([...lifeCycle, ...otherMethods, ...Object.keys(componentInstance), ...Object.keys(userInstance)])];
   const wrappedInstance = {
     __children__: [],
     __addChild(c) {
       this.__children__.push(c);
+    },
+    layoutComponents() {
+      // set sizes here - and move this to a nicer place
+    },
+    setRect(r) {
+      userInstance.rect = r;
+      componentInstance.rect = r;
     }
   };
   keys.reduce((acc, curr) => {
@@ -43,22 +52,23 @@ const wrap = (userDef, context) => {
     };
     return acc;
   }, wrappedInstance);
-  return {
-    wrappedInstance,
-    renderer
-  };
+  return wrappedInstance;
 };
 
-const wrapComponent = (wrappedInstance, renderer, children) => (
-  <ChartComponent wrappedInstance={wrappedInstance} renderer={renderer} >{children}</ChartComponent>
-);
-
-function synthesize(userDef, context, parentWrappedInstance) {
+function synthesize(userDef, context) {
   userDef.components = userDef.components || [];
-  const { wrappedInstance, renderer } = wrap(userDef, context);
-  parentWrappedInstance.__addChild(wrappedInstance);
-  const children = userDef.components.reduce((acc, childUserDef) => [...acc, synthesize(childUserDef, context, wrappedInstance)], []);
-  return wrapComponent(wrappedInstance, renderer, children);
+  let children = [];
+  const instance = wrap(userDef, context);
+
+  userDef.components.forEach((subComponentUserDef) => {
+    const oneLevelDeeper = synthesize(subComponentUserDef, context, instance);
+    instance.__addChild(oneLevelDeeper.instance);
+    children.push(oneLevelDeeper.vdom);
+  });
+  return {
+    vdom: <ChartComponent instance={instance} context={context}>{children}</ChartComponent>,
+    instance
+  };
 }
-export { wrap };
+
 export default synthesize;
