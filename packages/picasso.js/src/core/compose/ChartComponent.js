@@ -26,7 +26,7 @@ class ChartComponent extends Component {
         scaleRatio: { x: 1, y: 1 }
       };
     }
-    this.instance.setRect(this.rect);
+    this.instance.rect = this.rect;
     return this.rect;
   }
 

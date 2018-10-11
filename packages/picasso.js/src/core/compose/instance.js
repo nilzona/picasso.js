@@ -16,9 +16,13 @@ const otherMethods = [
   'preferredSize'
 ];
 
+const props = [
+  'rect'
+];
+
 const methods = [...lifeCycle, ...otherMethods];
 
-const wrap = (userDef, context) => {
+const create = (userDef, context) => {
   const { registries } = context;
   if (!userDef.type && userDef.components) {
     // assume layout type
@@ -27,30 +31,42 @@ const wrap = (userDef, context) => {
   const componentDef = registries.component(userDef.type);
   const userInstance = extend({}, userDef);
   const componentInstance = extend({}, componentDef);
+
+  // create a unique set of combined keys
   const keys = [...new Set([...methods, ...Object.keys(componentInstance), ...Object.keys(userInstance)])];
-  const wrappedInstance = {
-    __children__: [],
-    __addChild(c) {
-      this.__children__.push(c);
+
+  const children = [];
+
+  // apply internal api
+  const instance = {
+    addChild(c) {
+      children.push(c);
     },
-    _getChildren() {
-      return this.__children__;
+    getChildren() {
+      return children;
     },
     layoutComponents() {
       // set sizes here - and move this to a nicer place
-    },
-    setRect(r) {
-      this.setProp('rect', r);
-    },
-    setProp(prop, value) {
-      Object.defineProperty(userInstance, prop, {
-        value
-      });
-      Object.defineProperty(componentInstance, prop, {
-        value
-      });
     }
   };
+
+  // apply predefined props
+  props.reduce((acc, curr) => {
+    const prop = `__${curr}`;
+    Object.defineProperty(acc, curr, {
+      get() {
+        return this[prop];
+      },
+      set(newVal) {
+        this[prop] = newVal;
+        componentInstance[curr] = newVal;
+        userInstance[curr] = newVal;
+      }
+    });
+    return instance;
+  }, instance);
+
+  // apply methods and props
   keys.reduce((acc, curr) => {
     const userType = typeof userInstance[curr];
     const componentType = typeof componentInstance[curr];
@@ -71,8 +87,8 @@ const wrap = (userDef, context) => {
       acc[curr] = userInstance[curr] || componentInstance[curr];
     }
     return acc;
-  }, wrappedInstance);
-  return wrappedInstance;
+  }, instance);
+  return instance;
 };
 
-export default wrap;
+export default create;
