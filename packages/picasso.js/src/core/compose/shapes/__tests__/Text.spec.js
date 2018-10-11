@@ -1,4 +1,4 @@
-import * as textManipulation from '../../../../text-manipulation';
+import * as textManipulation from '../../../../web/text-manipulation';
 import render from '../Text';
 
 describe('text', () => {

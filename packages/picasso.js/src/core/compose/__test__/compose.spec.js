@@ -68,8 +68,8 @@ describe('picasso.compose function', () => {
         ]
       }
     ];
-    compose(definition);
-    expect(componentWillMount, 'componentWillMount').to.have.been.calledOnce;
+    compose(definition, { registries: { component: sinon.spy() } });
+    // expect something
   });
 });
 

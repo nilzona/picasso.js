@@ -22,8 +22,8 @@ describe('synthesize', () => {
       }
     };
     const instance = {};
-    const vnode = synthesize(settings, context, instance);
-    expect(vnode.children.length).to.equal(1);
-    expect(vnode.children[0].children.length).to.equal(2);
+    const { vdom } = synthesize(settings, context, instance);
+    expect(vdom.children.length).to.equal(1);
+    expect(vdom.children[0].children.length).to.equal(2);
   });
 });

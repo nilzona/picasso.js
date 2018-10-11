@@ -1,6 +1,6 @@
-import { ellipsText, measureText } from '../../../text-manipulation';
-import baselineHeuristic from '../../../text-manipulation/baseline-heuristic';
-import { detectTextDirection, flipTextAnchor } from '../../../../core/utils/rtl-util';
+import { ellipsText, measureText } from '../../../web/text-manipulation';
+import baselineHeuristic from '../../../web/text-manipulation/baseline-heuristic';
+import { detectTextDirection, flipTextAnchor } from '../../utils/rtl-util';
 
 export default function render(t, { g }) {
   const text = ellipsText(t, measureText);

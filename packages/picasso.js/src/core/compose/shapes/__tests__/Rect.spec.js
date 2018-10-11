@@ -1,6 +1,6 @@
 import render from '../Rect';
 
-describe('rect', () => {
+describe.skip('rect', () => {
   describe('render', () => {
     let sandbox,
       g,
