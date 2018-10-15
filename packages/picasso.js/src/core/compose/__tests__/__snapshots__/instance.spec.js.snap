@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`'should create default instance' 1`] = `
+Object {
+  "addChild": [Function],
+  "beforeRender": [Function],
+  "componentDidMount": [Function],
+  "componentDidUpdate": [Function],
+  "componentWillMount": [Function],
+  "componentWillReceiveProps": [Function],
+  "componentWillUnmount": [Function],
+  "componentWillUpdate": [Function],
+  "getChildren": [Function],
+  "layoutComponents": [Function],
+  "preferredSize": [Function],
+  "resize": [Function],
+  "shouldComponentUpdate": [Function],
+}
+`;

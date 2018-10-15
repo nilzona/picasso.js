@@ -91,4 +91,5 @@ const create = (userDef, context) => {
   return instance;
 };
 
+export { methods, props };
 export default create;
