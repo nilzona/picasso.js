@@ -4,21 +4,39 @@ import synthesize from './synthesize';
 
 import componentRegistry from '../component';
 
-const layoutComponent = {};
+const layoutComponent = {
+  preferredSize() {
+    let size = 0;
+    for (const child of this.getChildren()) {
+      size += child.preferredSize();
+    }
+    return size;
+  },
+  preferredDimension() {
+    let dim = { w: 0, h: 0 };
+    for (const child of this.getChildren()) {
+      const { w, h } = child.preferredDimension() || { w: 0, h: 0 };
+      dim.w += w;
+      dim.h += h;
+    }
+    return dim;
+  }
+};
 componentRegistry('layout', layoutComponent);
 
-function update(/* {  data, settings} */) {
-
-}
+function update(/* {  data, settings} */) {}
 
 function compose(composeDefinition, context) {
   const { element, data, settings } = composeDefinition;
-  const rootInstance = extend({
-    element,
-    data,
-    update,
-    type: 'layout'
-  }, settings);
+  const rootInstance = extend(
+    {
+      element,
+      data,
+      update,
+      type: 'layout'
+    },
+    settings
+  );
 
   const { instance, vdom } = synthesize(rootInstance, context);
 

@@ -11,18 +11,13 @@ const lifeCycle = [
   'beforeRender'
 ];
 
-const otherMethods = [
-  'resize',
-  'preferredSize'
-];
+const otherMethods = ['resize', 'preferredSize', 'preferredDimension'];
 
-const props = [
-  'rect'
-];
+const props = ['rect'];
 
 const methods = [...lifeCycle, ...otherMethods];
 
-const create = (userDef, context) => {
+const create = (userDef, context, depth) => {
   const { registries } = context;
   if (!userDef.type && userDef.components) {
     // assume layout type
@@ -33,12 +28,20 @@ const create = (userDef, context) => {
   const componentInstance = extend({}, componentDef);
 
   // create a unique set of combined keys
-  const keys = [...new Set([...methods, ...Object.keys(componentInstance), ...Object.keys(userInstance)])];
+  const keys = [
+    ...new Set([
+      ...methods,
+      ...Object.keys(componentInstance),
+      ...Object.keys(userInstance)
+    ])
+  ];
 
   const children = [];
 
   // apply internal api
   const instance = {
+    __depth: depth,
+    isRoot: depth === 0,
     addChild(c) {
       children.push(c);
     },
@@ -47,6 +50,18 @@ const create = (userDef, context) => {
     },
     layoutComponents() {
       // set sizes here - and move this to a nicer place
+      for (const child of this.getChildren()) {
+        if (child.type === 'layout') {
+          child.layoutComponents();
+        }
+      }
+      console.info(
+        this.__depth,
+        this.type,
+        this.layout,
+        this.preferredSize(),
+        this.preferredDimension()
+      );
     }
   };
 
@@ -70,16 +85,34 @@ const create = (userDef, context) => {
   keys.reduce((acc, curr) => {
     const userType = typeof userInstance[curr];
     const componentType = typeof componentInstance[curr];
-    if (userType !== 'undefined' && componentType !== 'undefined' && userType !== componentType) {
-      throw new Error(`Inconsistency userType:${userType} componentType:${componentType}`);
+    if (
+      userType !== 'undefined'
+      && componentType !== 'undefined'
+      && userType !== componentType
+    ) {
+      throw new Error(
+        `Inconsistency userType:${userType} componentType:${componentType}`
+      );
     }
-    if (methods.indexOf(curr) > -1 || userType === 'function' || componentType === 'function') {
+    if (
+      methods.indexOf(curr) > -1
+      || userType === 'function'
+      || componentType === 'function'
+    ) {
       acc[curr] = (...args) => {
         if (typeof userInstance[curr] === 'function') {
           return userInstance[curr].call(userInstance, ...args);
         }
         if (typeof componentInstance[curr] === 'function') {
-          return componentInstance[curr].call(componentInstance, ...args);
+          return componentInstance[curr].call(
+            {
+              ...componentInstance,
+              getChildren() {
+                return children;
+              }
+            },
+            ...args
+          );
         }
         return undefined;
       };
