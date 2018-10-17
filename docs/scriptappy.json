@@ -267,9 +267,7 @@
               "type": "any"
             }
           ],
-          "examples": [
-            "brush.removeValue('countries', 'Sweden');"
-          ]
+          "examples": ["brush.removeValue('countries', 'Sweden');"]
         },
         "removeValues": {
           "kind": "function",
@@ -330,9 +328,7 @@
               "type": "any"
             }
           ],
-          "examples": [
-            "brush.toggleValue('countries', 'Sweden');"
-          ]
+          "examples": ["brush.toggleValue('countries', 'Sweden');"]
         },
         "toggleValues": {
           "kind": "function",
@@ -403,9 +399,7 @@
               }
             }
           ],
-          "examples": [
-            "brush.addRange('Sales', { min: 20, max: 50 });"
-          ]
+          "examples": ["brush.addRange('Sales', { min: 20, max: 50 });"]
         },
         "addRanges": {
           "kind": "function",
@@ -675,9 +669,7 @@
               "type": "string"
             }
           ],
-          "examples": [
-            "brush.removeKeyAlias('BadFieldName');"
-          ]
+          "examples": ["brush.removeKeyAlias('BadFieldName');"]
         }
       },
       "events": {
@@ -2524,9 +2516,9 @@
     "component--line": {
       "kind": "object",
       "entries": {
-        "type": {
-          "defaultValue": "line",
-          "type": "string"
+        "module.exports": {
+          "kind": "function",
+          "params": []
         }
       },
       "definitions": {
@@ -3703,6 +3695,102 @@
         }
       }
     },
+    "dock-layout-settings": {
+      "kind": "object",
+      "entries": {
+        "size": {
+          "description": "Physical size. Defaults to the container element.",
+          "optional": true,
+          "kind": "object",
+          "entries": {
+            "width": {
+              "description": "Width in pixels",
+              "optional": true,
+              "type": "number"
+            },
+            "height": {
+              "description": "Height in pixels",
+              "optional": true,
+              "type": "number"
+            }
+          }
+        },
+        "logicalSize": {
+          "description": "Logical size",
+          "optional": true,
+          "kind": "object",
+          "entries": {
+            "width": {
+              "description": "Width in pixels",
+              "optional": true,
+              "type": "number"
+            },
+            "height": {
+              "description": "Height in pixels",
+              "optional": true,
+              "type": "number"
+            },
+            "preserveAspectRatio": {
+              "description": "If true, takes the smallest ratio of width/height between logical and physical size ( physical / logical )",
+              "optional": true,
+              "defaultValue": false,
+              "type": "boolean"
+            },
+            "align": {
+              "description": "Normalized value between 0-1. Defines how the space around the scaled axis is spread in the container, with 0.5 meaning the spread is equal on both sides. Only applicable if preserveAspectRatio is set to true",
+              "optional": true,
+              "defaultValue": 0.5,
+              "type": "number"
+            }
+          }
+        },
+        "center": {
+          "description": "Define how much space the center dock area requires",
+          "optional": true,
+          "kind": "object",
+          "entries": {
+            "minWidthRatio": {
+              "description": "Value between 0 and 1",
+              "optional": true,
+              "defaultValue": 0.5,
+              "type": "number"
+            },
+            "minHeightRatio": {
+              "description": "Value between 0 and 1",
+              "optional": true,
+              "defaultValue": 0.5,
+              "type": "number"
+            },
+            "minWidth": {
+              "description": "Width in pixels",
+              "optional": true,
+              "type": "number"
+            },
+            "minHeight": {
+              "description": "Height in pixels",
+              "optional": true,
+              "type": "number"
+            }
+          }
+        },
+        "layoutModes": {
+          "description": "Dictionary with named sizes",
+          "optional": true,
+          "type": "object",
+          "generics": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "{width:number"
+            },
+            {
+              "type": "height:number}"
+            }
+          ]
+        }
+      }
+    },
     "rect": {
       "kind": "object",
       "entries": {
@@ -3808,100 +3896,714 @@
         }
       }
     },
-    "dock-layout-settings": {
-      "kind": "object",
-      "entries": {
-        "size": {
-          "description": "Physical size. Defaults to the container element.",
-          "optional": true,
+    "testCirclePoint": {
+      "description": "Test if a Circle contains a point. If so, returns true and false otherwise.\nCircle muse have a radius greater then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "circle",
           "kind": "object",
           "entries": {
-            "width": {
-              "description": "Width in pixels",
-              "optional": true,
+            "cx": {
+              "description": "center x-coordinate",
               "type": "number"
             },
-            "height": {
-              "description": "Height in pixels",
-              "optional": true,
+            "cy": {
+              "description": "center y-coordinate",
+              "type": "number"
+            },
+            "r": {
+              "description": "circle radius",
               "type": "number"
             }
           }
         },
-        "logicalSize": {
-          "description": "Logical size",
-          "optional": true,
+        {
+          "name": "point",
           "kind": "object",
           "entries": {
-            "width": {
-              "description": "Width in pixels",
-              "optional": true,
+            "x": {
+              "description": "x-coordinate",
               "type": "number"
             },
-            "height": {
-              "description": "Height in pixels",
-              "optional": true,
-              "type": "number"
-            },
-            "preserveAspectRatio": {
-              "description": "If true, takes the smallest ratio of width/height between logical and physical size ( physical / logical )",
-              "optional": true,
-              "defaultValue": false,
-              "type": "boolean"
-            },
-            "align": {
-              "description": "Normalized value between 0-1. Defines how the space around the scaled axis is spread in the container, with 0.5 meaning the spread is equal on both sides. Only applicable if preserveAspectRatio is set to true",
-              "optional": true,
-              "defaultValue": 0.5,
+            "y": {
+              "description": "y-coordinate",
               "type": "number"
             }
           }
-        },
-        "center": {
-          "description": "Define how much space the center dock area requires",
-          "optional": true,
-          "kind": "object",
-          "entries": {
-            "minWidthRatio": {
-              "description": "Value between 0 and 1",
-              "optional": true,
-              "defaultValue": 0.5,
-              "type": "number"
-            },
-            "minHeightRatio": {
-              "description": "Value between 0 and 1",
-              "optional": true,
-              "defaultValue": 0.5,
-              "type": "number"
-            },
-            "minWidth": {
-              "description": "Width in pixels",
-              "optional": true,
-              "type": "number"
-            },
-            "minHeight": {
-              "description": "Height in pixels",
-              "optional": true,
-              "type": "number"
-            }
-          }
-        },
-        "layoutModes": {
-          "description": "Dictionary with named sizes",
-          "optional": true,
-          "type": "object",
-          "generics": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "{width:number"
-            },
-            {
-              "type": "height:number}"
-            }
-          ]
         }
+      ],
+      "returns": {
+        "description": "true if circle contains point",
+        "type": "boolean"
+      }
+    },
+    "testCircleRect": {
+      "description": "Test if a Circle collide with a rectangle. If so, returns true and false otherwise.\nCircle muse have a radius greater then 0.\nRectangle must have a width and height greather then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "circle",
+          "kind": "object",
+          "entries": {
+            "cx": {
+              "description": "center x-coordinate",
+              "type": "number"
+            },
+            "cy": {
+              "description": "center y-coordinate",
+              "type": "number"
+            },
+            "r": {
+              "description": "circle radius",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "name": "rect",
+          "kind": "object",
+          "entries": {
+            "x": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y": {
+              "description": "y-coordinate",
+              "type": "number"
+            },
+            "width": {
+              "description": "width",
+              "type": "number"
+            },
+            "height": {
+              "description": "height",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if circle collide with rectangle",
+        "type": "boolean"
+      }
+    },
+    "testCircleLine": {
+      "description": "Test if a Circle collide with a line segment. If so, returns true and false otherwise.\nCircle muse have a radius greater then 0.\nLine must have a length greater then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "circle",
+          "kind": "object",
+          "entries": {
+            "cx": {
+              "description": "center x-coordinate",
+              "type": "number"
+            },
+            "cy": {
+              "description": "center y-coordinate",
+              "type": "number"
+            },
+            "r": {
+              "description": "circle radius",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "name": "line",
+          "kind": "object",
+          "entries": {
+            "x1": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y1": {
+              "description": "y-coordinate",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if circle collide with line",
+        "type": "boolean"
+      }
+    },
+    "testCircleCircle": {
+      "description": "Test if a Circle collide with another Circle. If so, returns true and false otherwise.\nBoth circles muse have a radius greater then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "circle",
+          "kind": "object",
+          "entries": {
+            "cx": {
+              "description": "center x-coordinate",
+              "type": "number"
+            },
+            "cy": {
+              "description": "center y-coordinate",
+              "type": "number"
+            },
+            "r": {
+              "description": "circle radius",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "name": "circle",
+          "kind": "object",
+          "entries": {
+            "cx": {
+              "description": "center x-coordinate",
+              "type": "number"
+            },
+            "cy": {
+              "description": "center y-coordinate",
+              "type": "number"
+            },
+            "r": {
+              "description": "circle radius",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if circle collide with circle",
+        "type": "boolean"
+      }
+    },
+    "testCirclePolygon": {
+      "description": "Test if a Circle collide with Polygon. If so, returns true and false otherwise.\nCircle muse have a radius greater then 0.\nPolygon must contain at least 2 vertices",
+      "kind": "function",
+      "params": [
+        {
+          "name": "circle",
+          "kind": "object",
+          "entries": {
+            "cx": {
+              "description": "center x-coordinate",
+              "type": "number"
+            },
+            "cy": {
+              "description": "center y-coordinate",
+              "type": "number"
+            },
+            "r": {
+              "description": "circle radius",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "name": "polygon",
+          "kind": "object",
+          "entries": {
+            "vertices": {
+              "description": "Array of vertices",
+              "kind": "object",
+              "entries": {
+                "vertex": {
+                  "kind": "object",
+                  "entries": {
+                    "x": {
+                      "description": "x-coordinate",
+                      "type": "number"
+                    },
+                    "y": {
+                      "description": "y-coordinate",
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "edges": {
+              "description": "Array of edges",
+              "kind": "object",
+              "entries": {
+                "edge": {
+                  "description": "Array of points",
+                  "kind": "object",
+                  "entries": {
+                    "point": {
+                      "kind": "object",
+                      "entries": {
+                        "x": {
+                          "description": "x-coordinate",
+                          "type": "number"
+                        },
+                        "y": {
+                          "description": "y-coordinate",
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if circle collide with polygon",
+        "type": "boolean"
+      }
+    },
+    "testPolygonPoint": {
+      "description": "Test if a Polygon contains a Point. If so, returns true and false otherwise.\nPolygon must contain at least 2 vertices",
+      "kind": "function",
+      "params": [
+        {
+          "name": "polygon",
+          "kind": "object",
+          "entries": {
+            "vertices": {
+              "description": "Array of vertices",
+              "kind": "object",
+              "entries": {
+                "vertex": {
+                  "kind": "object",
+                  "entries": {
+                    "x": {
+                      "description": "x-coordinate",
+                      "type": "number"
+                    },
+                    "y": {
+                      "description": "y-coordinate",
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "edges": {
+              "description": "Array of edges",
+              "kind": "object",
+              "entries": {
+                "edge": {
+                  "description": "Array of points",
+                  "kind": "object",
+                  "entries": {
+                    "point": {
+                      "kind": "object",
+                      "entries": {
+                        "x": {
+                          "description": "x-coordinate",
+                          "type": "number"
+                        },
+                        "y": {
+                          "description": "y-coordinate",
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "point",
+          "kind": "object",
+          "entries": {
+            "x": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y": {
+              "description": "y-coordinate",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if polygon conatins point",
+        "type": "boolean"
+      }
+    },
+    "testPolygonLine": {
+      "description": "Test if a Polygon collider with a line. If so, returns true and false otherwise.\nPolygon must contain at least 3 edges.\nLine must have length greater then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "polygon",
+          "kind": "object",
+          "entries": {
+            "vertices": {
+              "description": "Array of vertices",
+              "kind": "object",
+              "entries": {
+                "vertex": {
+                  "kind": "object",
+                  "entries": {
+                    "x": {
+                      "description": "x-coordinate",
+                      "type": "number"
+                    },
+                    "y": {
+                      "description": "y-coordinate",
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "edges": {
+              "description": "Array of edges",
+              "kind": "object",
+              "entries": {
+                "edge": {
+                  "description": "Array of points",
+                  "kind": "object",
+                  "entries": {
+                    "point": {
+                      "kind": "object",
+                      "entries": {
+                        "x": {
+                          "description": "x-coordinate",
+                          "type": "number"
+                        },
+                        "y": {
+                          "description": "y-coordinate",
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "line",
+          "kind": "object",
+          "entries": {
+            "x1": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y1": {
+              "description": "y-coordinate",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if polygon collider with line",
+        "type": "boolean"
+      }
+    },
+    "testPolygonRect": {
+      "description": "Test if a Polygon collider with a rectangle. If so, returns true and false otherwise.\nPolygon must contain at least 3 edges.\nRectangle must width and height greater then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "polygon",
+          "kind": "object",
+          "entries": {
+            "vertices": {
+              "description": "Array of vertices",
+              "kind": "object",
+              "entries": {
+                "vertex": {
+                  "kind": "object",
+                  "entries": {
+                    "x": {
+                      "description": "x-coordinate",
+                      "type": "number"
+                    },
+                    "y": {
+                      "description": "y-coordinate",
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "edges": {
+              "description": "Array of edges",
+              "kind": "object",
+              "entries": {
+                "edge": {
+                  "description": "Array of points",
+                  "kind": "object",
+                  "entries": {
+                    "point": {
+                      "kind": "object",
+                      "entries": {
+                        "x": {
+                          "description": "x-coordinate",
+                          "type": "number"
+                        },
+                        "y": {
+                          "description": "y-coordinate",
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "rect",
+          "kind": "object",
+          "entries": {
+            "x": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y": {
+              "description": "y-coordinate",
+              "type": "number"
+            },
+            "width": {
+              "description": "width",
+              "type": "number"
+            },
+            "height": {
+              "description": "height",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if polygon collider with rect",
+        "type": "boolean"
+      }
+    },
+    "testRectRect": {
+      "description": "Test if a Rectangle collide with another rectangle. If so, returns true and false otherwise.\nBoth rectangles must have a width and height greather then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "rect",
+          "kind": "object",
+          "entries": {
+            "x": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y": {
+              "description": "y-coordinate",
+              "type": "number"
+            },
+            "width": {
+              "description": "width",
+              "type": "number"
+            },
+            "height": {
+              "description": "height",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "name": "rect",
+          "kind": "object",
+          "entries": {
+            "x": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y": {
+              "description": "y-coordinate",
+              "type": "number"
+            },
+            "width": {
+              "description": "width",
+              "type": "number"
+            },
+            "height": {
+              "description": "height",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if rectangle collide with rectangle",
+        "type": "boolean"
+      }
+    },
+    "testRectPoint": {
+      "description": "Test if a Rectangle contains a Point. If so, returns true and false otherwise.\nRectangle must have a width and height greather then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "rect",
+          "kind": "object",
+          "entries": {
+            "x": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y": {
+              "description": "y-coordinate",
+              "type": "number"
+            },
+            "width": {
+              "description": "width",
+              "type": "number"
+            },
+            "height": {
+              "description": "height",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "name": "point",
+          "kind": "object",
+          "entries": {
+            "x": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y": {
+              "description": "y-coordinate",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if rectangle contains point",
+        "type": "boolean"
+      }
+    },
+    "testRectLine": {
+      "description": "Test if a Rectangle collider with a line. If so, returns true and false otherwise.\nRectangle must have a width and height greather then 0.\nLine must have length greater then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "rect",
+          "kind": "object",
+          "entries": {
+            "x": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y": {
+              "description": "y-coordinate",
+              "type": "number"
+            },
+            "width": {
+              "description": "width",
+              "type": "number"
+            },
+            "height": {
+              "description": "height",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "name": "line",
+          "kind": "object",
+          "entries": {
+            "x1": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y1": {
+              "description": "y-coordinate",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if rectangle collide with line",
+        "type": "boolean"
+      }
+    },
+    "testLineLine": {
+      "description": "Test if a Line collider with another line. If so, returns true and false otherwise.\nBoth lines must have length greater then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "line",
+          "kind": "object",
+          "entries": {
+            "x1": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y1": {
+              "description": "y-coordinate",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "name": "line",
+          "kind": "object",
+          "entries": {
+            "x1": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y1": {
+              "description": "y-coordinate",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if line collide with line",
+        "type": "boolean"
+      }
+    },
+    "testLinePoint": {
+      "description": "Test if a Line contains a Point. If so, returns true and false otherwise.\nLine must have length greater then 0.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "line",
+          "kind": "object",
+          "entries": {
+            "x1": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y1": {
+              "description": "y-coordinate",
+              "type": "number"
+            }
+          }
+        },
+        {
+          "name": "point",
+          "kind": "object",
+          "entries": {
+            "x": {
+              "description": "x-coordinate",
+              "type": "number"
+            },
+            "y": {
+              "description": "y-coordinate",
+              "type": "number"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "true if line contains point",
+        "type": "boolean"
       }
     },
     "scale--band": {
@@ -5362,6 +6064,145 @@
       "returns": {
         "description": "A canvas renderer instance",
         "type": "#/definitions/renderer"
+      }
+    },
+    "render": {
+      "kind": "function",
+      "params": [
+        {
+          "name": "nodes",
+          "description": "Nodes to render",
+          "kind": "array",
+          "items": {
+            "type": "#/definitions/node-def"
+          }
+        }
+      ],
+      "returns": {
+        "description": "True if the nodes where rendered, otherwise false",
+        "type": "boolean"
+      }
+    },
+    "itemsAt": {
+      "description": "Get nodes renderer at area",
+      "kind": "function",
+      "params": [
+        {
+          "name": "geometry",
+          "description": "Get nodes that intersects with geometry",
+          "kind": "union",
+          "items": [
+            {
+              "type": "#/definitions/point"
+            },
+            {
+              "type": "#/definitions/circle"
+            },
+            {
+              "type": "#/definitions/rect"
+            },
+            {
+              "type": "#/definitions/line"
+            },
+            {
+              "type": "#/definitions/polygon"
+            }
+          ],
+          "type": "any"
+        }
+      ],
+      "returns": {
+        "kind": "array",
+        "items": {
+          "type": "#/definitions/SceneNode"
+        }
+      }
+    },
+    "findShapes": {
+      "description": "Get all nodes matching the provided selector",
+      "kind": "function",
+      "params": [
+        {
+          "name": "selector",
+          "description": "CSS selector [type, attribute, universal, class]",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "description": "Array of objects containing matching nodes",
+        "kind": "array",
+        "items": {
+          "type": "#/definitions/SceneNode"
+        }
+      }
+    },
+    "clear": {
+      "description": "Clear all child elements from the renderer root element",
+      "kind": "function",
+      "params": [],
+      "returns": {
+        "description": "The renderer instance",
+        "type": "#/definitions/renderer"
+      }
+    },
+    "size": {
+      "description": "Set or Get the size definition of the renderer container.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "opts",
+          "description": "Size definition",
+          "optional": true,
+          "type": "#/definitions/renderer-container-def"
+        }
+      ],
+      "returns": {
+        "description": "The current size definition",
+        "type": "#/definitions/renderer-container-def"
+      }
+    },
+    "measureText": {
+      "kind": "function",
+      "params": [
+        {
+          "name": "opts",
+          "kind": "object",
+          "entries": {
+            "text": {
+              "description": "Text to measure",
+              "type": "string"
+            },
+            "fontSize": {
+              "description": "{@link https://www.w3.org/TR/SVG/text.html#FontPropertiesUsedBySVG}",
+              "type": "string"
+            },
+            "fontFamily": {
+              "description": "{@link https://www.w3.org/TR/SVG/text.html#FontPropertiesUsedBySVG}",
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returns": {
+        "description": "Width and height of text",
+        "type": "object"
+      },
+      "examples": [
+        "measureText({\n text: 'my text',\n fontSize: '12px',\n fontFamily: 'Arial'\n}); // returns { width: 20, height: 12 }"
+      ]
+    },
+    "textBounds": {
+      "description": "Calculates the bounding rectangle of a text node. Including any potential line breaks.",
+      "kind": "function",
+      "params": [
+        {
+          "name": "node",
+          "type": "#/definitions/node--text-def"
+        }
+      ],
+      "returns": {
+        "description": "The bounding rectangle",
+        "type": "#/definitions/rect"
       }
     },
     "renderer": {

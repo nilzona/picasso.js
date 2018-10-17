@@ -27,7 +27,8 @@ function dpiScale(g) {
     || g.mozBackingStorePixelRatio
     || g.msBackingStorePixelRatio
     || g.oBackingStorePixelRatio
-    || g.backingStorePixelRatio || 1;
+    || g.backingStorePixelRatio
+    || 1;
   return dpr / backingStorePixelRatio;
 }
 
@@ -45,8 +46,14 @@ function applyContext(g, s, shapeToCanvasMap, computed = {}) {
     const canvasCmd = cmd[1];
     const convertCmd = cmd[2];
 
-    if ((shapeCmd in s.attrs && !(canvasCmd in computed)) && g[canvasCmd] !== s.attrs[shapeCmd]) {
-      const val = convertCmd ? convertCmd(s.attrs[shapeCmd]) : s.attrs[shapeCmd];
+    if (
+      shapeCmd in s.attrs
+      && !(canvasCmd in computed)
+      && g[canvasCmd] !== s.attrs[shapeCmd]
+    ) {
+      const val = convertCmd
+        ? convertCmd(s.attrs[shapeCmd])
+        : s.attrs[shapeCmd];
       if (typeof g[canvasCmd] === 'function') {
         g[canvasCmd](val);
       } else {
@@ -69,11 +76,27 @@ function renderShapes(shapes, g, shapeToCanvasMap) {
 
     // Gradient check
     if (shape.attrs && (shape.attrs.fill || shape.attrs.stroke)) {
-      if (shape.attrs.fill && typeof shape.attrs.fill === 'object' && shape.attrs.fill.type === 'gradient') {
-        computed.fillStyle = createCanvasGradient(g, shape.attrs, shape.attrs.fill);
+      if (
+        shape.attrs.fill
+        && typeof shape.attrs.fill === 'object'
+        && shape.attrs.fill.type === 'gradient'
+      ) {
+        computed.fillStyle = createCanvasGradient(
+          g,
+          shape.attrs,
+          shape.attrs.fill
+        );
       }
-      if (shape.attrs.stroke && typeof shape.attrs.stroke === 'object' && shape.attrs.stroke.type === 'gradient') {
-        computed.strokeStyle = createCanvasGradient(g, shape.attrs, shape.attrs.stroke);
+      if (
+        shape.attrs.stroke
+        && typeof shape.attrs.stroke === 'object'
+        && shape.attrs.stroke.type === 'gradient'
+      ) {
+        computed.strokeStyle = createCanvasGradient(
+          g,
+          shape.attrs,
+          shape.attrs.stroke
+        );
       }
     }
 
@@ -149,8 +172,8 @@ export function renderer(sceneFn = sceneFactory) {
     const scaleY = rect.scaleRatio.y;
 
     if (hasChangedRect) {
-      el.style.left = `${Math.round(rect.margin.left + (rect.x * scaleX))}px`;
-      el.style.top = `${Math.round(rect.margin.top + (rect.y * scaleY))}px`;
+      el.style.left = `${Math.round(rect.margin.left + rect.x * scaleX)}px`;
+      el.style.top = `${Math.round(rect.margin.top + rect.y * scaleY)}px`;
       el.style.width = `${Math.round(rect.width * scaleX)}px`;
       el.style.height = `${Math.round(rect.height * scaleY)}px`;
       el.width = Math.round(rect.width * dpiRatio * scaleX);
@@ -163,7 +186,8 @@ export function renderer(sceneFn = sceneFactory) {
     };
 
     if (dpiRatio !== 1 || scaleX !== 1 || scaleY !== 1) {
-      sceneContainer.transform = `scale(${dpiRatio * scaleX}, ${dpiRatio * scaleY})`;
+      sceneContainer.transform = `scale(${dpiRatio * scaleX}, ${dpiRatio
+        * scaleY})`;
     }
 
     const newScene = sceneFn({

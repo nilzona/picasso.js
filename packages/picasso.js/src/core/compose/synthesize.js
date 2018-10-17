@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import ChartComponent from './ChartComponent';
+import ChartComponent from './chart-component';
 import create from './instance';
 
 function synthesize(userDef, context, depth = 0) {

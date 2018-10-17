@@ -12,9 +12,7 @@
     }
   },
   "extends": "airbnb-base",
-  "plugins": [
-    "react"
-  ],
+  "plugins": ["react"],
   "settings": {
     "react": {
       "pragma": "h"
@@ -60,9 +58,7 @@
         "sourceType": "module",
         "ecmaVersion": 2018
       },
-      "plugins": [
-        "mocha"
-      ],
+      "plugins": ["mocha"],
       "rules": {
         "import/no-extraneous-dependencies": [
           "error",
