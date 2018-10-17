@@ -364,7 +364,7 @@ function checkShowSettings(
  * @property {object<string, {width: number, height: number}>} [layoutModes] Dictionary with named sizes
  */
 
-export function dockLayout(initialSettings) {
+function dockLayout(initialSettings) {
   const components = [];
   const hiddenComponents = [];
   let settings = resolveSettings(initialSettings);
