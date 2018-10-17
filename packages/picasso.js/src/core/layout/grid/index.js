@@ -1,8 +1,6 @@
-const gridStrategy = {
+export default settings => ({
   layout(instance) {
     const dim = instance.preferredDimension();
-    console.info(dim);
+    console.info(settings, dim);
   }
-};
-
-export default gridStrategy;
+});

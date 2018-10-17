@@ -50,21 +50,9 @@ const create = (userDef, context, depth) => {
       return children;
     },
     layoutComponents() {
-      // set sizes here - and move this to a nicer place
-      // console.info(
-      //   strategy,
-      //   this.__depth,
-      //   this.type,
-      //   this.layout,
-      //   this.preferredSize(),
-      //   this.preferredDimension()
-      // );
-      const strategyType = `${(this.layout
-        && this.layout.strategy
-        && this.layout.strategy.type)
-        || 'dock'}`;
-      const strategy = registries.layout(strategyType);
-      console.info(strategyType);
+      const strategyDef = (this.layout && this.strategy) || {};
+      const { type = 'dock', ...settings } = strategyDef;
+      const strategy = registries.layout(type)(settings);
       strategy.layout(this);
 
       for (const child of this.getChildren()) {

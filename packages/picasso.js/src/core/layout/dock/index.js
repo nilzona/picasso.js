@@ -432,11 +432,9 @@ export function dockLayout(initialSettings) {
   return docker;
 }
 
-const dockStrategy = {
+export default settings => ({
   layout(instance) {
     const size = instance.preferredSize();
-    console.info(size);
+    console.info(settings, size);
   }
-};
-
-export default dockStrategy;
+});
