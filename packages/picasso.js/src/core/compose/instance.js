@@ -23,9 +23,10 @@ const create = (userDef, context, depth) => {
     // assume layout type
     userDef.type = 'layout';
   }
+
   const componentDef = registries.component(userDef.type);
-  const userInstance = extend({}, userDef);
-  const componentInstance = extend({}, componentDef);
+  const userInstance = extend(true, {}, userDef);
+  const componentInstance = extend(true, {}, componentDef);
 
   // create a unique set of combined keys
   const keys = [
@@ -50,18 +51,27 @@ const create = (userDef, context, depth) => {
     },
     layoutComponents() {
       // set sizes here - and move this to a nicer place
+      // console.info(
+      //   strategy,
+      //   this.__depth,
+      //   this.type,
+      //   this.layout,
+      //   this.preferredSize(),
+      //   this.preferredDimension()
+      // );
+      const strategyType = `${(this.layout
+        && this.layout.strategy
+        && this.layout.strategy.type)
+        || 'dock'}`;
+      const strategy = registries.layout(strategyType);
+      console.info(strategyType);
+      strategy.layout(this);
+
       for (const child of this.getChildren()) {
         if (child.type === 'layout') {
           child.layoutComponents();
         }
       }
-      console.info(
-        this.__depth,
-        this.type,
-        this.layout,
-        this.preferredSize(),
-        this.preferredDimension()
-      );
     }
   };
 
@@ -121,6 +131,7 @@ const create = (userDef, context, depth) => {
     }
     return acc;
   }, instance);
+
   return instance;
 };
 

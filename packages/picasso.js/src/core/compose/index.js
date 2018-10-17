@@ -8,7 +8,7 @@ const layoutComponent = {
   preferredSize() {
     let size = 0;
     for (const child of this.getChildren()) {
-      size += child.preferredSize();
+      size += child.preferredSize() || 0;
     }
     return size;
   },

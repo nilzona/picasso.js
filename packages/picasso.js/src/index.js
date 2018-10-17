@@ -21,6 +21,7 @@ import formatterRegistry from './core/formatter';
 import interactionRegistry from './core/interaction';
 import scaleRegistry from './core/chart/scales';
 import { symbolRegistry } from './core/symbols';
+import layoutRegistry from './core/layout';
 
 import loggerFn from './core/utils/logger';
 import registry from './core/utils/registry';
@@ -176,7 +177,8 @@ const p = pic({
   interaction: interactionRegistry,
   renderer: renderer(),
   scale: scaleRegistry,
-  symbol: symbolRegistry
+  symbol: symbolRegistry,
+  layout: layoutRegistry
 });
 
 components.forEach(p.use);
