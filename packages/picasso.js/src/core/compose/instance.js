@@ -50,7 +50,7 @@ const create = (userDef, context, depth) => {
       return children;
     },
     layoutComponents() {
-      const strategyDef = (this.layout && this.strategy) || {};
+      const strategyDef = this.strategy || {};
       const { type = 'dock', ...settings } = strategyDef;
       const strategy = registries.layout(type)(settings || {});
       strategy.layout(this);
