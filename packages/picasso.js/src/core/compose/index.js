@@ -21,6 +21,7 @@ const getDim = (element) => {
 function compose(composeDefinition, context) {
   const { element, data, settings } = composeDefinition;
   const rootInstance = extend(
+    true,
     {
       element,
       data,
