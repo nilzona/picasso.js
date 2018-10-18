@@ -433,8 +433,15 @@ function dockLayout(initialSettings) {
 }
 
 export default settings => ({
+  preferredSize(instance) {
+    let size = 0;
+    instance.getChildren().forEach((child) => {
+      size += child.preferredSize() || 0;
+    });
+    return size;
+  },
   layout(instance) {
-    const size = instance.preferredSize();
+    const size = this.preferredSize(instance);
     console.info(settings, size);
   }
 });

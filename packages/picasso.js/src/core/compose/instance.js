@@ -55,11 +55,11 @@ const create = (userDef, context, depth) => {
       const strategy = registries.layout(type)(settings || {});
       strategy.layout(this);
 
-      for (const child of this.getChildren()) {
+      this.getChildren().forEach((child) => {
         if (child.type === 'layout') {
           child.layoutComponents();
         }
-      }
+      });
     }
   };
 
