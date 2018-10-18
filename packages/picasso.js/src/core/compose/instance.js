@@ -78,6 +78,9 @@ const create = (userDef, context, depth) => {
           child.layoutComponents();
         }
       });
+    },
+    layoutComponent() {
+      throw new Error('Layout strategy needs to implement `layoutComponent`');
     }
   };
 
