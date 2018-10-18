@@ -43,6 +43,22 @@ class ChartComponent extends Component {
     }
     return undefined;
   }
+
+  componentWillMount() {
+    this.instance.componentWillMount();
+  }
+
+  componentDidMount() {
+    this.instance.componentDidMount();
+  }
+
+  componentWillUpdate() {
+    this.instance.componentWillUpdate();
+  }
+
+  componentDidUpdate() {
+    this.instance.componentDidUpdate();
+  }
 }
 
 export default ChartComponent;

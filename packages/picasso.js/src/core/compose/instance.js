@@ -36,8 +36,8 @@ const createInstances = (userDef, { registries }) => {
   } else {
     componentDef = registries.component(userDef.type);
   }
-  const userInstance = extend(true, {}, userDef);
-  const componentInstance = extend(true, {}, componentDef);
+  const userInstance = extend({}, userDef);
+  const componentInstance = extend({}, componentDef);
 
   return {
     userInstance,
@@ -122,19 +122,10 @@ const create = (userDef, context, depth) => {
           return userInstance[curr].call(userInstance, ...args);
         }
         if (typeof componentInstance[curr] === 'function') {
-          return componentInstance[curr].call(
-            {
-              ...componentInstance,
-              ...(userDef.strategy
-                ? {
-                  getChildren() {
-                    return children;
-                  }
-                }
-                : {})
-            },
-            ...args
-          );
+          if (userDef.strategy) {
+            componentInstance.getChildren = () => children;
+          }
+          return componentInstance[curr].call(componentInstance, ...args);
         }
         return undefined;
       };
