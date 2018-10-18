@@ -11,7 +11,9 @@ function compose(composeDefinition, context) {
       element,
       data,
       update,
-      type: 'layout'
+      strategy: {
+        type: 'dock'
+      }
     },
     settings
   );

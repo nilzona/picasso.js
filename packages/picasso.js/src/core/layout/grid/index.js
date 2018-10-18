@@ -1,15 +1,18 @@
 export default settings => ({
-  preferredDimension(instance) {
+  preferredSize() {
+    return 300;
+  },
+  preferredDimension() {
     let dim = { w: 0, h: 0 };
-    instance.getChildren().forEach((child) => {
+    this.getChildren().forEach((child) => {
       const { w, h } = child.preferredDimension() || { w: 0, h: 0 };
       dim.w += w;
       dim.h += h;
     });
     return dim;
   },
-  layout(instance) {
-    const dim = this.preferredDimension(instance);
+  layoutComponent() {
+    const dim = this.preferredDimension();
     console.info(settings, dim);
   }
 });

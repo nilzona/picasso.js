@@ -17,16 +17,26 @@ const props = ['rect'];
 
 const methods = [...lifeCycle, ...otherMethods];
 
-const create = (userDef, context, depth) => {
-  const { registries } = context;
-  if (!userDef.type && userDef.components) {
-    // assume layout type
-    userDef.type = 'layout';
+const createInstances = (userDef, { registries }) => {
+  let componentDef;
+  if (userDef.strategy) {
+    const strategy = userDef.strategy || {};
+    const { type = 'dock', ...settings } = strategy;
+    componentDef = registries.layout(type)(settings || {});
+  } else {
+    componentDef = registries.component(userDef.type);
   }
-
-  const componentDef = registries.component(userDef.type);
   const userInstance = extend(true, {}, userDef);
   const componentInstance = extend(true, {}, componentDef);
+
+  return {
+    userInstance,
+    componentInstance
+  };
+};
+
+const create = (userDef, context, depth) => {
+  const { userInstance, componentInstance } = createInstances(userDef, context);
 
   // create a unique set of combined keys
   const keys = [
@@ -50,13 +60,9 @@ const create = (userDef, context, depth) => {
       return children;
     },
     layoutComponents() {
-      const strategyDef = this.strategy || {};
-      const { type = 'dock', ...settings } = strategyDef;
-      const strategy = registries.layout(type)(settings || {});
-      strategy.layout(this);
-
+      this.layoutComponent();
       this.getChildren().forEach((child) => {
-        if (child.type === 'layout') {
+        if (child.strategy) {
           child.layoutComponents();
         }
       });
@@ -105,13 +111,9 @@ const create = (userDef, context, depth) => {
           return componentInstance[curr].call(
             {
               ...componentInstance,
-              ...(userDef.type === 'layout'
-                ? {
-                  getChildren() {
-                    return children;
-                  }
-                }
-                : {})
+              getChildren() {
+                return children;
+              }
             },
             ...args
           );
