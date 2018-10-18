@@ -433,15 +433,16 @@ function dockLayout(initialSettings) {
 }
 
 export default settings => ({
-  preferredSize() {
-    let size = 0;
-    this.getChildren().forEach((child) => {
-      size += child.preferredSize() || 0;
-    });
-    return size;
-  },
   layoutComponent() {
-    const size = this.preferredSize();
-    console.info(settings, size, this.rect);
+    console.info(this.rect, settings);
+    const sortedChildren = this.getChildren().sort(
+      (a, b) => a.prioOrder - b.prioOrder
+    );
+    const len = sortedChildren.length;
+    // Walk all children
+    for (let i = 0; i < len; ++i) {
+      const child = sortedChildren[i];
+      console.info(child.preferredSize());
+    }
   }
 });
