@@ -17,6 +17,8 @@ const props = ['rect'];
 
 const methods = [...lifeCycle, ...otherMethods];
 
+const reservedMethods = ['layoutComponents', 'layoutComponent', ...props];
+
 const createInstances = (userDef, { registries }) => {
   let componentDef;
   if (userDef.strategy) {
@@ -43,7 +45,9 @@ const create = (userDef, context, depth) => {
     ...new Set([
       ...methods,
       ...Object.keys(componentInstance),
-      ...Object.keys(userInstance)
+      ...Object.keys(userInstance).filter(
+        key => reservedMethods.indexOf(key) === -1
+      )
     ])
   ];
 
@@ -104,7 +108,10 @@ const create = (userDef, context, depth) => {
       || componentType === 'function'
     ) {
       acc[curr] = (...args) => {
-        if (typeof userInstance[curr] === 'function') {
+        if (
+          reservedMethods.indexOf(curr) === -1
+          && typeof userInstance[curr] === 'function'
+        ) {
           return userInstance[curr].call(userInstance, ...args);
         }
         if (typeof componentInstance[curr] === 'function') {
