@@ -50,13 +50,9 @@ const create = (userDef, context, depth) => {
 
   // create a unique set of combined keys
   const keys = [
-    ...new Set([
-      ...methods,
-      ...Object.keys(componentInstance),
-      ...Object.keys(userInstance).filter(
-        key => reservedKeys.indexOf(key) === -1
-      )
-    ])
+    ...methods,
+    ...Object.keys(componentInstance),
+    ...Object.keys(userInstance).filter(key => reservedKeys.indexOf(key) === -1)
   ];
 
   const children = [];
