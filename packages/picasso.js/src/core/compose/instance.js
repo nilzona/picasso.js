@@ -105,9 +105,13 @@ const create = (userDef, context, depth) => {
           return componentInstance[curr].call(
             {
               ...componentInstance,
-              getChildren() {
-                return children;
-              }
+              ...(userDef.type === 'layout'
+                ? {
+                  getChildren() {
+                    return children;
+                  }
+                }
+                : {})
             },
             ...args
           );
