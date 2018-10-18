@@ -17,7 +17,15 @@ const props = ['rect'];
 
 const methods = [...lifeCycle, ...otherMethods];
 
-const reservedMethods = ['layoutComponents', 'layoutComponent', ...props];
+const reservedKeys = [
+  'layoutComponents',
+  'layoutComponent',
+  ...props,
+  '__depth',
+  'isRoot',
+  'addChild',
+  'getChildren'
+];
 
 const createInstances = (userDef, { registries }) => {
   let componentDef;
@@ -46,14 +54,14 @@ const create = (userDef, context, depth) => {
       ...methods,
       ...Object.keys(componentInstance),
       ...Object.keys(userInstance).filter(
-        key => reservedMethods.indexOf(key) === -1
+        key => reservedKeys.indexOf(key) === -1
       )
     ])
   ];
 
   const children = [];
 
-  // apply internal api
+  // apply internal api add keys to `reservedKeys`so user can't override them
   const instance = {
     __depth: depth,
     isRoot: depth === 0,
@@ -109,7 +117,7 @@ const create = (userDef, context, depth) => {
     ) {
       acc[curr] = (...args) => {
         if (
-          reservedMethods.indexOf(curr) === -1
+          reservedKeys.indexOf(curr) === -1
           && typeof userInstance[curr] === 'function'
         ) {
           return userInstance[curr].call(userInstance, ...args);
