@@ -350,7 +350,7 @@ function checkShowSettings(
  * @typedef {object} dock-layout-settings
  * @property {object} [size] - Physical size. Defaults to the container element.
  * @property {number} [size.width] - Width in pixels
- * @property {number} [size.height]- Height in pixels
+ * @property {number} [size.height] - Height in pixels
  * @property {object} [logicalSize] - Logical size
  * @property {number} [logicalSize.width] - Width in pixels
  * @property {number} [logicalSize.height] - Height in pixels
@@ -442,6 +442,6 @@ export default settings => ({
   },
   layoutComponent() {
     const size = this.preferredSize();
-    console.info(settings, size);
+    console.info(settings, size, this.rect);
   }
 });
