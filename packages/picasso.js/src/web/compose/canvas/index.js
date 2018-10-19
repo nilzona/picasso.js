@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import {
   Circle, Line, Path, Rect, Text
 } from './shapes';
+import { extendAndTransformAttributes } from '../../../core/scene-graph/attributes';
 
 class Canvas extends Component {
   constructor() {
@@ -21,7 +22,8 @@ class Canvas extends Component {
     const shapes = [];
     nodes.forEach((node) => {
       let vNode;
-      const { type, ...props } = node;
+      const { type, ...attrs } = node;
+      const props = extendAndTransformAttributes(attrs);
       switch (type) {
         case 'circle':
           vNode = <Circle ctx={ctx} {...props} />;

@@ -39,4 +39,19 @@ function assignMappedAttribute(target, source) {
   });
 }
 
-export { mappedAttributes, assignMappedAttribute };
+function extendAndTransformAttributes(source, target = {}) {
+  Object.keys(source).forEach((key) => {
+    if (mappedAttributes[key]) {
+      target[mappedAttributes[key]] = source[key];
+    } else {
+      target[key] = source[key];
+    }
+  });
+  return target;
+}
+
+export {
+  mappedAttributes,
+  assignMappedAttribute,
+  extendAndTransformAttributes
+};

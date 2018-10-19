@@ -1,3 +1,5 @@
+/* eslint class-methods-use-this: "off" */
+
 import { ellipsText, measureText } from '../../../text-manipulation';
 import baselineHeuristic from '../../../text-manipulation/baseline-heuristic';
 import {
@@ -5,15 +7,29 @@ import {
   flipTextAnchor
 } from '../../../../core/utils/rtl-util';
 
-export default function render(t, { g }) {
-  const text = ellipsText(t, measureText);
+import CanvasShape from './canvas-shape';
 
-  g.font = `${t['font-size']} ${t['font-family']}`;
-  g.canvas.dir = detectTextDirection(t.text);
-  const textAlign = t['text-anchor'] === 'middle' ? 'center' : t['text-anchor'];
-  g.textAlign = flipTextAnchor(textAlign, g.canvas.dir);
+class Text extends CanvasShape {
+  renderShape({
+    ctx, x = 0, dx = 0, y = 0, dy = 0, ...attrs
+  }) {
+    if (ctx.g) {
+      const g = ctx.g;
+      const t = {
+        x, dx, y, dy, ...attrs
+      };
+      const text = ellipsText(t, measureText);
 
-  const bdy = baselineHeuristic(t);
+      g.font = `${t['font-size']} ${t['font-family']}`;
+      g.canvas.dir = detectTextDirection(t.text);
+      const textAlign = t['text-anchor'] === 'middle' ? 'center' : t['text-anchor'];
+      g.textAlign = flipTextAnchor(textAlign, g.canvas.dir);
 
-  g.fillText(text, t.x + t.dx, t.y + t.dy + bdy);
+      const bdy = baselineHeuristic(t);
+
+      g.fillText(text, t.x + t.dx, t.y + t.dy + bdy);
+    }
+  }
 }
+
+export default Text;

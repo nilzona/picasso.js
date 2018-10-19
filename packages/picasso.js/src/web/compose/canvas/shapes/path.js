@@ -1,9 +1,22 @@
-export default function render(path, { g, doStroke, doFill }) {
-  const p = new Path2D(path.d);
-  if (doFill) {
-    g.fill(p);
-  }
-  if (doStroke) {
-    g.stroke(p);
+/* eslint class-methods-use-this: "off" */
+
+import CanvasShape from './canvas-shape';
+
+class Path extends CanvasShape {
+  renderShape({
+    ctx, d, fill, stroke
+  }) {
+    if (ctx.g) {
+      const g = ctx.g;
+      const p = new Path2D(d);
+      if (fill) {
+        g.fill(p);
+      }
+      if (stroke) {
+        g.stroke(p);
+      }
+    }
   }
 }
+
+export default Path;

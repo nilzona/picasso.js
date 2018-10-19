@@ -1,3 +1,5 @@
+/* eslint class-methods-use-this: "off" */
+
 import { Component } from 'preact';
 
 class CanvasShape extends Component {
@@ -42,7 +44,7 @@ class CanvasShape extends Component {
     }
   }
 
-  static renderShape() {
+  renderShape() {
     throw new Error('renderShape method is not implemented in sub class');
   }
 }

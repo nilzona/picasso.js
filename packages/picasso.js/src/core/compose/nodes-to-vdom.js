@@ -1,10 +1,12 @@
 import { h } from 'preact';
+import { extendAndTransformAttributes } from '../scene-graph/attributes';
 
 export default function nodesToJSX(nodes) {
   const vNodes = [];
   nodes.forEach((node) => {
     let vNode;
-    const { type, ...props } = node;
+    const { type, ...attrs } = node;
+    const props = extendAndTransformAttributes(attrs);
     switch (type) {
       case 'rect':
         vNode = <rect {...props} />;
