@@ -144,7 +144,8 @@ function pic(config = {}, registries = {}) {
     registries: regis,
     logger,
     style: config.style,
-    palettes: config.palettes
+    palettes: config.palettes,
+    renderer: config.renderer
   });
   picassojs.config = () => config;
 

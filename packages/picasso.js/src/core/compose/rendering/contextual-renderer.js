@@ -1,6 +1,7 @@
 import { h } from 'preact';
-import Canvas from '../../web/compose/canvas';
-import nodesToVDom from './nodes-to-vdom';
+import Canvas from '../../../web/compose/canvas';
+import { extendAndTransformAttributes } from '../../scene-graph/attributes';
+import { maybeAddGradients } from './svg-gradient';
 
 function ContextualRenderer({ ctx, rect, nodes }) {
   const { renderContext } = ctx;
@@ -28,11 +29,22 @@ function ContextualRenderer({ ctx, rect, nodes }) {
       />
     );
   }
-  const vNodes = nodesToVDom(nodes, ctx);
+  const vNodes = [];
+  const vDefs = [];
+  nodes.forEach((node) => {
+    let vNode;
+    const { type, ...attrs } = node;
+    const props = extendAndTransformAttributes(attrs);
+    maybeAddGradients(props, vDefs);
+    const DomNode = type;
+    vNode = <DomNode {...props} />;
+    vNodes.push(vNode);
+  });
   if (renderContext === 'svg') {
     ctx.ns = ctx.ns || 'http://www.w3.org/2000/svg';
     return (
       <svg xmlns={ctx.ns} style={style} width={width} height={height}>
+        <defs>{vDefs}</defs>
         <g style="pointer-events: auto">{vNodes}</g>
       </svg>
     );

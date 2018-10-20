@@ -1,6 +1,7 @@
 /* eslint class-methods-use-this: "off" */
 
 import { Component } from 'preact';
+import createCanvasGradient from '../../../renderer/canvas-renderer/canvas-gradient';
 
 class CanvasShape extends Component {
   constructor({ ctx }) {
@@ -30,11 +31,23 @@ class CanvasShape extends Component {
       const g = props.ctx.g;
       g.save();
 
-      if (props.fill) {
+      // Gradient check
+      if (
+        props.fill
+        && typeof props.fill === 'object'
+        && props.fill.type === 'gradient'
+      ) {
+        g.fillStyle = createCanvasGradient(g, props, props.fill);
+      } else if (props.fill) {
         g.fillStyle = props.fill;
       }
-
-      if (props.stroke) {
+      if (
+        props.stroke
+        && typeof props.stroke === 'object'
+        && props.stroke.type === 'gradient'
+      ) {
+        g.strokeStyle = createCanvasGradient(g, props, props.stroke);
+      } else if (props.stroke) {
         g.strokeStyle = props.stroke;
       }
 
