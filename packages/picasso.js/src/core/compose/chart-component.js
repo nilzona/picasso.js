@@ -44,20 +44,24 @@ class ChartComponent extends Component {
     return undefined;
   }
 
-  componentWillMount() {
-    this.instance.componentWillMount();
+  componentWillMount(...args) {
+    this.instance.componentWillMount(...args);
   }
 
-  componentDidMount() {
-    this.instance.componentDidMount();
+  componentWillUnmount(...args) {
+    this.instance.componentWillUnmount(...args);
   }
 
-  componentWillUpdate() {
-    this.instance.componentWillUpdate();
+  componentDidMount(...args) {
+    this.instance.componentDidMount(...args);
   }
 
-  componentDidUpdate() {
-    this.instance.componentDidUpdate();
+  componentWillUpdate(...args) {
+    this.instance.componentWillUpdate(...args);
+  }
+
+  componentDidUpdate(...args) {
+    this.instance.componentDidUpdate(...args);
   }
 }
 
