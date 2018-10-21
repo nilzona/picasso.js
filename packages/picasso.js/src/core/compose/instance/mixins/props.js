@@ -1,4 +1,4 @@
-export default function applyProps({
+const applyProps = ({
   userDef,
   userInstance,
   componentInstance,
@@ -7,43 +7,41 @@ export default function applyProps({
   children,
   DEFAULT_METHODS,
   DEFAULT_RESERVED_KEYS
-}) {
-  // apply props
-  return keys.reduce((acc, curr) => {
-    const userType = typeof userInstance[curr];
-    const componentType = typeof componentInstance[curr];
-    if (
-      userType !== 'undefined'
+}) => keys.reduce((acc, curr) => {
+  const userType = typeof userInstance[curr];
+  const componentType = typeof componentInstance[curr];
+  if (
+    userType !== 'undefined'
       && componentType !== 'undefined'
       && userType !== componentType
-    ) {
-      throw new Error(
-        `Inconsistency userType:${userType} componentType:${componentType}`
-      );
-    }
-    if (
-      DEFAULT_METHODS.indexOf(curr) > -1
+  ) {
+    throw new Error(
+      `Inconsistency userType:${userType} componentType:${componentType}`
+    );
+  }
+  if (
+    DEFAULT_METHODS.indexOf(curr) > -1
       || userType === 'function'
       || componentType === 'function'
-    ) {
-      acc[curr] = (...args) => {
-        if (
-          DEFAULT_RESERVED_KEYS.indexOf(curr) === -1
+  ) {
+    acc[curr] = (...args) => {
+      if (
+        DEFAULT_RESERVED_KEYS.indexOf(curr) === -1
           && typeof userInstance[curr] === 'function'
-        ) {
-          return userInstance[curr].call(userInstance, ...args);
+      ) {
+        return userInstance[curr].call(userInstance, ...args);
+      }
+      if (typeof componentInstance[curr] === 'function') {
+        if (userDef.strategy) {
+          componentInstance.getChildren = () => children;
         }
-        if (typeof componentInstance[curr] === 'function') {
-          if (userDef.strategy) {
-            componentInstance.getChildren = () => children;
-          }
-          return componentInstance[curr].call(componentInstance, ...args);
-        }
-        return undefined;
-      };
-    } else {
-      acc[curr] = userInstance[curr] || componentInstance[curr];
-    }
-    return acc;
-  }, instance);
-}
+        return componentInstance[curr].call(componentInstance, ...args);
+      }
+      return undefined;
+    };
+  } else {
+    acc[curr] = userInstance[curr] || componentInstance[curr];
+  }
+  return acc;
+}, instance);
+export default applyProps;

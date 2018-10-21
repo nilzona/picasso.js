@@ -55,7 +55,8 @@ const create = (userDef, context, depth) => {
       keys,
       children,
       DEFAULT_METHODS,
-      DEFAULT_RESERVED_KEYS
+      DEFAULT_RESERVED_KEYS,
+      context
     }),
     instance
   );

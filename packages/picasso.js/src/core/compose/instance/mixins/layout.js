@@ -1,4 +1,4 @@
-export default function layout({ depth, children, instance }) {
+const layout = ({ depth, children, instance }) => {
   instance.depth = depth;
   instance.addChild = c => children.push(c);
   instance.getChildren = () => children;
@@ -14,4 +14,6 @@ export default function layout({ depth, children, instance }) {
     throw new Error('Layout strategy needs to implement `layoutComponent`');
   };
   return instance;
-}
+};
+
+export default layout;
