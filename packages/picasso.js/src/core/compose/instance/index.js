@@ -19,17 +19,8 @@ const createInstances = (userDef, { registries }) => {
   const userInstance = extend({}, userDef);
   const componentInstance = extend({}, componentDef);
 
-  return {
-    userInstance,
-    componentInstance
-  };
-};
-
-const create = (userDef, context, depth) => {
-  const { userInstance, componentInstance } = createInstances(userDef, context);
-
   // create combined keys
-  const DEFAULT_KEYS = [
+  const keys = [
     ...DEFAULT_METHODS,
     ...Object.keys(componentInstance),
     ...Object.keys(userInstance).filter(
@@ -37,38 +28,31 @@ const create = (userDef, context, depth) => {
     )
   ];
 
-  const children = [];
-
-  // apply internal api add keys to `reservedKeys`so user can't override them
-  const instance = {
-    depth,
-    addChild(c) {
-      children.push(c);
-    },
-    getChildren() {
-      return children;
-    },
-    layoutComponents() {
-      this.layoutComponent();
-      this.getChildren().forEach((child) => {
-        if (child.strategy) {
-          child.layoutComponents();
-        }
-      });
-    },
-    layoutComponent() {
-      throw new Error('Layout strategy needs to implement `layoutComponent`');
-    }
+  return {
+    userInstance,
+    componentInstance,
+    keys
   };
+};
+
+const create = (userDef, context, depth) => {
+  const { userInstance, componentInstance, keys } = createInstances(
+    userDef,
+    context
+  );
+
+  const children = [];
+  const instance = {};
 
   return mixins.reduce(
     (acc, curr) => curr({
       userDef,
       userInstance,
       componentInstance,
+      depth,
       instance: acc,
       props: DEFAULT_SETTER_GETTER_PROPS,
-      keys: DEFAULT_KEYS,
+      keys,
       children,
       DEFAULT_METHODS,
       DEFAULT_RESERVED_KEYS
