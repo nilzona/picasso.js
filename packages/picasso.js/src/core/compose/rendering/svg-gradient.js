@@ -9,7 +9,7 @@ let gradientHashMap = {};
  * @ignore
  * @param  {Object} gradient Gradient property
  */
-export function get(gradientDef, vDefs) {
+function getCreate(gradientDef, vDefs) {
   let gradientHash = hashObject(gradientDef);
   let gradientId = '';
 
@@ -33,7 +33,8 @@ export function get(gradientDef, vDefs) {
     const gradientStops = stops.map(({ offset, color, opacity }) => (
       <stop
         offset={`${offset * 100}%`}
-        style={`stop-color:${color};stop-opacity:${opacity || 1}`}
+        stop-color={color}
+        stop-opacity={opacity || 1}
       />
     ));
     gradientId = `pic${gradientHash}`;
@@ -65,9 +66,9 @@ export function isGradientProperty(prop) {
 
 export function maybeAddGradients(attrs, defs) {
   if (isGradientProperty(attrs.fill)) {
-    attrs.fill = get(attrs.fill, defs);
+    attrs.fill = getCreate(attrs.fill, defs);
   }
   if (isGradientProperty(attrs.stroke)) {
-    attrs.stroke = get(attrs.stroke, defs);
+    attrs.stroke = getCreate(attrs.stroke, defs);
   }
 }
