@@ -1,11 +1,9 @@
 import { h, render } from 'preact';
-import createRendererBox from '../renderer-box';
 import create from '../index';
+import createRendererBox from '../../../core/compose/rendering/renderer-box';
 
 export default function renderer(opts = {}) {
-  const {
-    createElement = document.createElement.bind(document)
-  } = opts;
+  const { createElement = document.createElement.bind(document) } = opts;
 
   let el;
   let rect = createRendererBox();
@@ -17,7 +15,7 @@ export default function renderer(opts = {}) {
 
   dom.root = () => el;
 
-  dom.appendTo = (element) => {
+  dom.appendTo = element => {
     if (!el) {
       el = createElement('div');
       el.style.position = 'absolute';
@@ -31,7 +29,7 @@ export default function renderer(opts = {}) {
     return el;
   };
 
-  dom.render = (nodes) => {
+  dom.render = nodes => {
     if (!el) {
       return false;
     }
@@ -39,8 +37,8 @@ export default function renderer(opts = {}) {
     const scaleX = rect.scaleRatio.x;
     const scaleY = rect.scaleRatio.y;
 
-    el.style.left = `${Math.round(rect.margin.left + (rect.x * scaleX))}px`;
-    el.style.top = `${Math.round(rect.margin.left + (rect.y * scaleY))}px`;
+    el.style.left = `${Math.round(rect.margin.left + rect.x * scaleX)}px`;
+    el.style.top = `${Math.round(rect.margin.left + rect.y * scaleY)}px`;
     el.style.width = `${Math.round(rect.width * scaleX)}px`;
     el.style.height = `${Math.round(rect.height * scaleY)}px`;
 
@@ -80,7 +78,7 @@ export default function renderer(opts = {}) {
     dNode = null;
   };
 
-  dom.size = (inner) => {
+  dom.size = inner => {
     if (inner) {
       rect = createRendererBox(inner);
     }

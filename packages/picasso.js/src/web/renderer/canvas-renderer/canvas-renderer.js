@@ -2,9 +2,9 @@ import sceneFactory from '../../../core/scene-graph/scene';
 import registry from '../../../core/utils/registry';
 import { onLineBreak } from '../../text-manipulation';
 import createCanvasGradient from './canvas-gradient';
-import createRendererBox from '../renderer-box';
 import create from '../index';
 import injectTextBoundsFn from '../../text-manipulation/inject-textbounds';
+import createRendererBox from '../../../core/compose/rendering/renderer-box';
 
 const reg = registry();
 

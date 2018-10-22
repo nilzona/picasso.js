@@ -2,14 +2,10 @@ import { tree as treeFactory } from './svg-tree';
 import { svgNs } from './svg-nodes';
 import sceneFactory from '../../../core/scene-graph/scene';
 import { onLineBreak } from '../../text-manipulation';
-import {
-  resetGradients,
-  onGradient,
-  createDefsNode
-} from './svg-gradient';
-import createRendererBox from '../renderer-box';
+import { resetGradients, onGradient, createDefsNode } from './svg-gradient';
 import create from '../index';
 import injectTextBoundsFn from '../../text-manipulation/inject-textbounds';
+import createRendererBox from '../../../core/compose/rendering/renderer-box';
 
 /**
  * Create a new svg renderer
@@ -19,7 +15,11 @@ import injectTextBoundsFn from '../../text-manipulation/inject-textbounds';
  * @param {function} sceneFn - Scene factory
  * @returns {renderer} A svg renderer instance
  */
-export default function renderer(treeFn = treeFactory, ns = svgNs, sceneFn = sceneFactory) {
+export default function renderer(
+  treeFn = treeFactory,
+  ns = svgNs,
+  sceneFn = sceneFactory
+) {
   const tree = treeFn();
   let el;
   let group;
@@ -33,7 +33,7 @@ export default function renderer(treeFn = treeFactory, ns = svgNs, sceneFn = sce
 
   svg.root = () => group;
 
-  svg.appendTo = (element) => {
+  svg.appendTo = element => {
     if (!el) {
       el = element.ownerDocument.createElementNS(ns, 'svg');
       el.style.position = 'absolute';
@@ -51,7 +51,7 @@ export default function renderer(treeFn = treeFactory, ns = svgNs, sceneFn = sce
     return el;
   };
 
-  svg.render = (nodes) => {
+  svg.render = nodes => {
     if (!el) {
       return false;
     }
@@ -60,8 +60,8 @@ export default function renderer(treeFn = treeFactory, ns = svgNs, sceneFn = sce
     const scaleY = rect.scaleRatio.y;
 
     if (hasChangedRect) {
-      el.style.left = `${Math.round(rect.margin.left + (rect.x * scaleX))}px`;
-      el.style.top = `${Math.round(rect.margin.top + (rect.y * scaleY))}px`;
+      el.style.left = `${Math.round(rect.margin.left + rect.x * scaleX)}px`;
+      el.style.top = `${Math.round(rect.margin.top + rect.y * scaleY)}px`;
       el.setAttribute('width', Math.round(rect.width * scaleX));
       el.setAttribute('height', Math.round(rect.height * scaleY));
     }
@@ -124,7 +124,7 @@ export default function renderer(treeFn = treeFactory, ns = svgNs, sceneFn = sce
     group = null;
   };
 
-  svg.size = (opts) => {
+  svg.size = opts => {
     if (opts) {
       const newRect = createRendererBox(opts);
 

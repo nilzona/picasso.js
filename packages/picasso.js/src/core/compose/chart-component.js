@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import ContextualRenderer from './rendering/contextual-renderer';
-import createRendererBox from '../../web/renderer/renderer-box';
+import createRendererBox from './rendering/renderer-box';
 // import mapDeprecated from './mapDeprecated';
 
 class ChartComponent extends Component {
