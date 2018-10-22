@@ -1,7 +1,5 @@
-
-
 /*
-created -> componentWillMount
+created -> constructor
 beforeMount -> show ?
 mounted -> componentDidMount
 beforeUnmount -> hide ?

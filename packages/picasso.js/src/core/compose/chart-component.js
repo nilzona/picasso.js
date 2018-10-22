@@ -1,34 +1,34 @@
 import { h, Component } from 'preact';
 import ContextualRenderer from './rendering/contextual-renderer';
-import createRendererBox from './rendering/renderer-box';
+// import createRendererBox from './rendering/renderer-box';
 // import mapDeprecated from './mapDeprecated';
 
 class ChartComponent extends Component {
   constructor({ instance }) {
     super();
     this.instance = instance;
-    this.resize();
+    // this.resize();
   }
 
-  resize(rect) {
-    if (rect) {
-      const newRect = createRendererBox(rect);
-      if (JSON.stringify(rect) !== JSON.stringify(newRect)) {
-        this.rect = newRect;
-      }
-    } else {
-      this.rect = {
-        x: 0,
-        y: 0,
-        width: 500,
-        height: 500,
-        margin: { left: 0 },
-        scaleRatio: { x: 1, y: 1 }
-      };
-    }
-    this.instance.rect = this.rect;
-    return this.rect;
-  }
+  // resize(rect) {
+  //   if (rect) {
+  //     const newRect = createRendererBox(rect);
+  //     if (JSON.stringify(rect) !== JSON.stringify(newRect)) {
+  //       this.rect = newRect;
+  //     }
+  //   } else {
+  //     this.rect = {
+  //       x: 0,
+  //       y: 0,
+  //       width: 500,
+  //       height: 500,
+  //       margin: { left: 0 },
+  //       scaleRatio: { x: 1, y: 1 }
+  //     };
+  //   }
+  //   this.instance.rect = this.rect;
+  //   return this.rect;
+  // }
 
   render({ context, children }) {
     // props, state
@@ -44,7 +44,9 @@ class ChartComponent extends Component {
             ? context.renderer.prio[0] || 'svg'
             : 'svg'
       };
-      return <ContextualRenderer ctx={ctx} rect={this.rect} nodes={nodes} />;
+      return (
+        <ContextualRenderer ctx={ctx} rect={this.instance.rect} nodes={nodes} />
+      );
     }
     return undefined;
   }
@@ -53,12 +55,16 @@ class ChartComponent extends Component {
     this.instance.componentWillMount(...args);
   }
 
-  componentWillUnmount(...args) {
-    this.instance.componentWillUnmount(...args);
-  }
-
   componentDidMount(...args) {
     this.instance.componentDidMount(...args);
+  }
+
+  componentWillReceiveProps(...args) {
+    this.instance.componentWillReceiveProps(...args);
+  }
+
+  shouldComponentUpdate(...args) {
+    this.instance.shouldComponentUpdate(...args);
   }
 
   componentWillUpdate(...args) {
@@ -67,6 +73,10 @@ class ChartComponent extends Component {
 
   componentDidUpdate(...args) {
     this.instance.componentDidUpdate(...args);
+  }
+
+  componentWillUnmount(...args) {
+    this.instance.componentWillUnmount(...args);
   }
 }
 

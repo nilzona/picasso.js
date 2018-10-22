@@ -20,7 +20,7 @@ const getDim = (element) => {
 
 function compose(composeDefinition, context) {
   const { element, data, settings } = composeDefinition;
-  const rootInstance = extend(
+  const rootDefinition = extend(
     true,
     {
       element,
@@ -33,7 +33,7 @@ function compose(composeDefinition, context) {
     settings
   );
 
-  const { instance, vdom } = synthesize(rootInstance, context);
+  const { instance, vdom } = synthesize(rootDefinition, context);
   const { width, height } = getDim(element);
   instance.rect = {
     x: 0,
@@ -41,10 +41,10 @@ function compose(composeDefinition, context) {
     width,
     height
   };
-  instance.layoutComponents();
+  instance.layoutComponents(context, rootDefinition.strategy);
 
   render(vdom, element);
-  return rootInstance;
+  return instance;
 }
 
 export default compose;

@@ -8,18 +8,23 @@ export const DEFAULT_LIFECYCLE = [
   'componentWillUnmount',
   'beforeRender'
 ];
+export const LEGACY_LIFECYCLE = [
+  'created',
+  'beforeMount',
+  'mounted',
+  'beforeUnmount',
+  'beforeUpdate',
+  'updated',
+  'beforeRender',
+  'beforeDestroy',
+  'destroyed'
+];
 export const DEFAULT_METHODS = [
+  'render',
   'resize',
   'preferredSize',
   'preferredDimension',
-  ...DEFAULT_LIFECYCLE
-];
-export const DEFAULT_SETTER_GETTER_PROPS = ['rect'];
-export const DEFAULT_RESERVED_KEYS = [
   'layoutComponents',
-  'layoutComponent',
-  ...DEFAULT_SETTER_GETTER_PROPS,
-  'depth',
-  'addChild',
-  'getChildren'
+  ...DEFAULT_LIFECYCLE,
+  ...LEGACY_LIFECYCLE
 ];
