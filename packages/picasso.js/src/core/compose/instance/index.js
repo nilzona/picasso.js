@@ -5,7 +5,7 @@ import {
   DEFAULT_METHODS,
   DEFAULT_RESERVED_KEYS,
   DEFAULT_SETTER_GETTER_PROPS
-} from './contants';
+} from './constants';
 
 const createInstances = (userDef, { registries }) => {
   let componentDef;
