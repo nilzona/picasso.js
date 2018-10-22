@@ -1,12 +1,12 @@
+import { DEFAULT_METHODS, DEFAULT_RESERVED_KEYS } from '../constants';
+
 const applyProps = ({
   userDef,
   userInstance,
   componentInstance,
   instance,
   keys,
-  children,
-  DEFAULT_METHODS,
-  DEFAULT_RESERVED_KEYS
+  children
 }) => keys.reduce((acc, curr) => {
   const userType = typeof userInstance[curr];
   const componentType = typeof componentInstance[curr];

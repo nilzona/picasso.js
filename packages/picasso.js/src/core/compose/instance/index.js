@@ -54,8 +54,6 @@ const create = (userDef, context, depth) => {
       props: DEFAULT_SETTER_GETTER_PROPS,
       keys,
       children,
-      DEFAULT_METHODS,
-      DEFAULT_RESERVED_KEYS,
       context
     }),
     instance
