@@ -13,7 +13,7 @@ const apply = ({ registries, style }, currInstance) => {
     if (depMap[curr]) {
       acc[curr] = depMap[curr];
     }
-    return currInstance;
+    return acc;
   }, currInstance);
 };
 const applyDeps = ({
