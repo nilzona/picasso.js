@@ -1,17 +1,21 @@
 import symbolFactory from '../../../symbols';
 
-const apply = ({ registries, style }, currInstance) => {
+const apply = ({ registries, style, renderer }, currInstance) => {
   const { require = [] } = currInstance;
-  const renderer = registries.renderer()(); // TODO:
+  const useRenderer = currInstance.renderer
+    ? registries.renderer(currInstance.renderer)()
+    : renderer || registries.renderer()();
   const depMap = {
-    renderer: () => renderer,
+    renderer: () => useRenderer,
     symbol: () => symbolFactory,
     registries: () => registries,
     style: () => style
   };
   Object.keys(require).reduce((acc, curr) => {
     if (depMap[curr]) {
-      acc[curr] = depMap[curr];
+      Object.defineProperty(acc, curr, {
+        get: depMap[curr]
+      });
     }
     return acc;
   }, currInstance);
