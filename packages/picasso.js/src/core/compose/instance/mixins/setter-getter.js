@@ -17,4 +17,5 @@ const applySetterGetter = ({
   });
   return acc;
 }, instance);
+
 export default applySetterGetter;

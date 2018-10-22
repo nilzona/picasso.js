@@ -44,4 +44,5 @@ const applyProps = ({
   }
   return acc;
 }, instance);
+
 export default applyProps;

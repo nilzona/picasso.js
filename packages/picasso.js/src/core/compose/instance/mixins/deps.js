@@ -20,6 +20,7 @@ const apply = ({ registries, style, renderer }, currInstance) => {
     return acc;
   }, currInstance);
 };
+
 const applyDeps = ({
   userInstance, componentInstance, instance, context
 }) => {
