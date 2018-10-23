@@ -21,9 +21,7 @@ export const LEGACY_LIFECYCLE = [
 ];
 export const DEFAULT_METHODS = [
   'render',
-  'resize',
-  'preferredSize',
-  'preferredDimension',
+  'getPreferredSize',
   'layoutComponents',
   ...DEFAULT_LIFECYCLE,
   ...LEGACY_LIFECYCLE

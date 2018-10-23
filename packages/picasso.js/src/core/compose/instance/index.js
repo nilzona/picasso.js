@@ -1,33 +1,42 @@
 import extend from 'extend';
 import { DEFAULT_METHODS } from './constants';
-import { stitchFunction, stitchGetter } from './stitch';
+import { linkFunction, linkGetter } from './link';
 import createRendererBox from '../rendering/renderer-box';
 
 const createInstances = (userDef, { registries }) => {
   let componentDef;
-  if (!userDef.type && userDef.components && userDef.components.length) {
-    // assume layout component
-    userDef.type = 'layout';
-  }
-  componentDef = registries.component(userDef.type);
+  let type = userDef.type || 'layout'; // default to layout component if undefined
+  componentDef = registries.component(type);
+  // set defaults
+  const userSettings = extend(
+    true,
+    { show: true },
+    componentDef.defaultSettings,
+    userDef
+  );
+  userSettings.type = type;
 
-  const userInstance = extend({}, userDef);
+  const userInstance = extend({}, userSettings);
   const componentInstance = extend({}, componentDef);
 
   return {
+    userSettings,
     userInstance,
     componentInstance
   };
 };
 
 const create = (userDef, context) => {
-  const { userInstance, componentInstance } = createInstances(userDef, context);
+  const { userSettings, userInstance, componentInstance } = createInstances(
+    userDef,
+    context
+  );
 
   const children = [];
   const instance = {};
 
   // add public methods
-  DEFAULT_METHODS.forEach(fnName => stitchFunction(fnName, {
+  DEFAULT_METHODS.forEach(fnName => linkFunction(fnName, {
     source: [userInstance, componentInstance],
     target: instance
   }));
@@ -35,6 +44,7 @@ const create = (userDef, context) => {
   // add internal api
   instance.addChild = c => children.push(c);
   instance.getChildren = () => children;
+  instance.visible = true;
 
   let rect = createRendererBox();
   Object.defineProperties(instance, {
@@ -48,20 +58,32 @@ const create = (userDef, context) => {
     },
     userSettings: {
       get() {
-        return userDef;
+        return userSettings;
       }
     }
   });
   // expose getters both on user and component instance
-  stitchGetter('rect', {
+  ['rect', 'visible'].forEach(propName => linkGetter(propName, {
     source: instance,
     target: [userInstance, componentInstance]
-  });
+  }));
   // expose getters only on component instance
-  ['getChildren', 'userSettings'].forEach(propName => stitchGetter(propName, {
+  ['getChildren', 'userSettings'].forEach(propName => linkGetter(propName, {
     source: instance,
     target: componentInstance
   }));
+
+  function linkRequire(sattelite) {
+    let { require = [] } = sattelite;
+    require.forEach((req) => {
+      if (req === 'registries') {
+        linkGetter(req, { target: sattelite }, context.registries);
+      }
+    });
+  }
+  linkRequire(componentInstance);
+  linkRequire(userInstance);
+  instance.created();
 
   return instance;
 };

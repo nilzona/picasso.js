@@ -1,8 +1,7 @@
 import { render } from 'preact';
-import extend from 'extend';
 import synthesize from './synthesize';
 
-function update(/* {  data, settings} */) {}
+// function update(/* {  data, settings} */) {}
 
 const getDim = (element) => {
   if (typeof element.getBoundingClientRect === 'function') {
@@ -20,20 +19,9 @@ const getDim = (element) => {
 
 function compose(composeDefinition, context) {
   const { element, data, settings } = composeDefinition;
-  const rootDefinition = extend(
-    true,
-    {
-      element,
-      data,
-      update,
-      strategy: {
-        type: 'dock'
-      }
-    },
-    settings
-  );
+  const userDef = { data, settings };
 
-  const { instance, vdom } = synthesize(rootDefinition, context);
+  const { instance, vdom } = synthesize(userDef, context);
   const { width, height } = getDim(element);
   instance.rect = {
     x: 0,
@@ -41,7 +29,7 @@ function compose(composeDefinition, context) {
     width,
     height
   };
-  instance.layoutComponents(context, rootDefinition.strategy);
+  instance.layoutComponents(userDef.strategy);
 
   render(vdom, element);
   return instance;

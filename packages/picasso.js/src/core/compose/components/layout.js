@@ -1,42 +1,27 @@
 const layoutComponent = {
-  defaultSettings: {},
+  defaultSettings: {
+    settings: {
+      strategy: {
+        type: 'dock'
+      },
+      components: []
+    }
+  },
+  require: ['registries'],
 
-  componentWillMount() {
-    console.log('componentWillMount');
+  created() {
+    const strategy = this.userSettings.settings.strategy;
+    this.layoutStrategy = this.registries.layout(strategy.type)(strategy);
   },
 
-  componentDidMount() {
-    console.log('componentDidMount');
+  getPreferredSize() {
+    const components = this.getChildren().filter(c => c.userSettings.show);
+    return this.layoutStrategy.getPreferredSize(components);
   },
 
-  componentWillReceiveProps() {
-    console.log('componentWillReceiveProps');
-  },
-
-  shouldComponentUpdate() {
-    console.log('shouldComponentUpdate');
-  },
-
-  componentWillUpdate() {
-    console.log('componentWillUpdate');
-  },
-
-  componentDidUpdate() {
-    console.log('componentDidUpdate');
-  },
-
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
-  },
-
-  layoutComponents(ctx) {
-    console.log("let's layout");
-    const settings = this.userSettings;
-    const layoutStrategy = ctx.registries.layout(settings.strategy.type)(
-      ctx,
-      settings
-    );
-    layoutStrategy.layout(this.rect, this.getChildren());
+  layoutComponents() {
+    const components = this.getChildren().filter(c => c.userSettings.show);
+    this.layoutStrategy.layout(this.rect, components);
   }
 };
 

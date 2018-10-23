@@ -37,7 +37,12 @@ function ContextualRenderer({ ctx, rect, nodes }) {
     const props = extendAndTransformAttributes(attrs);
     maybeAddGradients(props, vDefs);
     const DomNode = type;
-    vNode = <DomNode {...props} />;
+    if (type === 'text') {
+      const { text, ...textProps } = props;
+      vNode = <text {...textProps}>{text}</text>;
+    } else {
+      vNode = <DomNode {...props} />;
+    }
     vNodes.push(vNode);
   });
   if (renderContext === 'svg') {

@@ -1,7 +1,17 @@
-export default (ctx, settings) => ({
+export default () => ({
+  defaultLayoutSettings: {},
+  getPreferredSize(components) {
+    let mw = 0;
+    let mh = 0;
+    components.forEach((c) => {
+      const size = c.getPreferredSize();
+      mw = Math.max(mw, size.width);
+      mh = Math.max(mh, size.height);
+    });
+    return { width: mw, height: mh };
+  },
   layout(rect, components) {
-    // just a dummy layout engine
-    console.log('layout grid');
+    // just a simpel grid layout engine
     let rows = Math.ceil(Math.sqrt(components.length));
     let cols = rows;
     let dx = rect.width / cols;
@@ -32,7 +42,7 @@ export default (ctx, settings) => ({
       subRect.y += dy;
     }
     components.forEach((c) => {
-      c.layoutComponents(ctx);
+      c.layoutComponents();
     });
   }
 });

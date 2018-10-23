@@ -1,9 +1,9 @@
 import registry from '../utils/registry';
-import dockLayout from './dock';
-import gridLayout from './grid';
+import dockStrategy from './dock';
+import gridStrategy from './grid';
 
 const layoutRegistry = registry();
-layoutRegistry('dock', dockLayout);
-layoutRegistry('grid', gridLayout);
+layoutRegistry('dock', dockStrategy);
+layoutRegistry('grid', gridStrategy);
 
 export default layoutRegistry;

@@ -1,4 +1,4 @@
-export function stitchFunction(fnName, { source, target }) {
+export function linkFunction(fnName, { source, target }) {
   if (!Array.isArray(source)) {
     source = [source];
   }
@@ -17,7 +17,7 @@ export function stitchFunction(fnName, { source, target }) {
   });
 }
 
-export function stitchGetter(propName, { source, target }) {
+export function linkGetter(propName, { source, target }, value) {
   if (!Array.isArray(source)) {
     source = [source];
   }
@@ -25,16 +25,22 @@ export function stitchGetter(propName, { source, target }) {
     target = [target];
   }
   target.forEach((t) => {
-    source.forEach((s) => {
+    if (value) {
       Object.defineProperty(t, propName, {
         get() {
-          return s[propName];
+          return value;
         }
       });
-    });
+    } else {
+      source.forEach((s) => {
+        if (s[propName]) {
+          Object.defineProperty(t, propName, {
+            get() {
+              return s[propName];
+            }
+          });
+        }
+      });
+    }
   });
-}
-
-export function stitchDeps() {
-  // add deps herea
 }
