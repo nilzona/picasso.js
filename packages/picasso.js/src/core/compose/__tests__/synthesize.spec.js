@@ -24,7 +24,6 @@ describe('synthesize', () => {
       }
     };
     const { vdom } = synthesize({ settings }, context);
-    console.log(vdom)
     expect(vdom.children.length).to.equal(1);
     expect(vdom.children[0].children.length).to.equal(2);
   });
