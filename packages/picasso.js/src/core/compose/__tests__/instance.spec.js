@@ -1,14 +1,16 @@
-import create, { props, methods } from '../instance';
+import create from '../instance';
 
 describe('instance', () => {
   let sandbox;
   let component;
+  let data;
   let instance;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    component = sandbox.stub();
-    instance = create({}, { registries: { component } });
+    component = sandbox.stub().returns({});
+    data = sandbox.stub();
+    instance = create({}, { registries: { component, data } });
   });
 
   afterEach(() => {
@@ -34,15 +36,4 @@ describe('instance', () => {
     expect(instance.getChildren()).to.have.length(3);
   });
 
-  it('should apply predefined props', () => {
-    for (const prop of props) {
-      expect(instance).to.have.property(prop);
-    }
-  });
-
-  it('should apply predefined methods', () => {
-    for (const method of methods) {
-      expect(instance[method]).to.be.a('function');
-    }
-  });
 });

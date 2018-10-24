@@ -3,17 +3,26 @@
 exports[`'should create default instance' 1`] = `
 Object {
   "addChild": [Function],
+  "beforeDestroy": [Function],
+  "beforeMount": [Function],
   "beforeRender": [Function],
+  "beforeUnmount": [Function],
+  "beforeUpdate": [Function],
   "componentDidMount": [Function],
   "componentDidUpdate": [Function],
   "componentWillMount": [Function],
   "componentWillReceiveProps": [Function],
   "componentWillUnmount": [Function],
   "componentWillUpdate": [Function],
+  "created": [Function],
+  "destroyed": [Function],
   "getChildren": [Function],
+  "getPreferredSize": [Function],
   "layoutComponents": [Function],
-  "preferredSize": [Function],
-  "resize": [Function],
+  "mounted": [Function],
+  "render": [Function],
   "shouldComponentUpdate": [Function],
+  "updated": [Function],
+  "visible": true,
 }
 `;

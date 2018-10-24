@@ -5,24 +5,26 @@ describe('synthesize', () => {
     let settings = {
       components: [{
         type: 'test',
-        components: [
-          {
-            type: 'test'
-          },
-          {
-            type: 'test'
-          }
-        ]
+        settings: {
+          components: [
+            {
+              type: 'test'
+            },
+            {
+              type: 'test'
+            }
+          ]
+        }
       }]
     };
     let context = {
       registries: {
-        component: () => {},
+        component: () => ({}),
         data: () => () => ({})
       }
     };
-    const instance = {};
-    const { vdom } = synthesize(settings, context, instance);
+    const { vdom } = synthesize({ settings }, context);
+    console.log(vdom)
     expect(vdom.children.length).to.equal(1);
     expect(vdom.children[0].children.length).to.equal(2);
   });

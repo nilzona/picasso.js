@@ -34,12 +34,6 @@ describe('picasso.compose function', () => {
         components: [],
         data: {}
       },
-      context: {
-        registries: {
-          component: () => {},
-          data: () => () => ({})
-        }
-      },
       componentWillMount,
       componentDidMount,
       componentWillUnmount,
@@ -68,7 +62,13 @@ describe('picasso.compose function', () => {
         ]
       }
     ];
-    compose(definition, { registries: { component: sinon.spy() } });
+    compose(definition, {
+      registries: {
+        component: () => ({
+        }),
+        data: () => () => ({})
+      }
+    });
     // expect something
   });
 });
