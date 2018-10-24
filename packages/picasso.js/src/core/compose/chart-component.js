@@ -7,7 +7,6 @@ class ChartComponent extends Component {
   constructor({ instance }) {
     super();
     this.instance = instance;
-    this.instance.created();
   }
 
   render({ context, children }) {
