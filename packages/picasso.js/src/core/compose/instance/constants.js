@@ -5,8 +5,7 @@ export const DEFAULT_LIFECYCLE = [
   'componentWillReceiveProps',
   'componentWillUpdate',
   'componentDidUpdate',
-  'componentWillUnmount',
-  'beforeRender'
+  'componentWillUnmount'
 ];
 export const LEGACY_LIFECYCLE = [
   'created',

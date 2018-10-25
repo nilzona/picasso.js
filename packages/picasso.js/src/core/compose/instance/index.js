@@ -76,14 +76,14 @@ const create = (userDef, context) => {
   const requireMap = {
     registries: context.registries
   };
-  function linkRequire(sattelite) {
+  const linkRequire = (sattelite) => {
     let { require = [] } = sattelite;
     require.forEach((req) => {
       if (requireMap[req]) {
         linkGetter(req, { target: sattelite }, requireMap[req]);
       }
     });
-  }
+  };
   linkRequire(componentInstance);
   linkRequire(userInstance);
 

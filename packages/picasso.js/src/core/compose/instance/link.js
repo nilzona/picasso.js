@@ -6,14 +6,16 @@ export function linkFunction(fnName, { source, target }) {
     target = [target];
   }
   target.forEach((t) => {
-    t[fnName] = (...args) => {
-      for (let i = 0; i < source.length; ++i) {
-        if (typeof source[i][fnName] === 'function') {
-          return source[i][fnName].call(source[i], ...args);
+    Object.defineProperty(t, fnName, {
+      value(...args) {
+        for (let i = 0; i < source.length; ++i) {
+          if (typeof source[i][fnName] === 'function') {
+            return source[i][fnName].call(source[i], ...args);
+          }
         }
+        return undefined;
       }
-      return undefined;
-    };
+    });
   });
 }
 

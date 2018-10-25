@@ -332,7 +332,7 @@ function create(initialSettings) {
   return docker;
 }
 
-export default (strategySettings) => {
+const dockLayout = (strategySettings) => {
   const docker = create(strategySettings);
   return {
     defaultLayoutSettings: {
@@ -371,3 +371,5 @@ export default (strategySettings) => {
     }
   };
 };
+
+export default dockLayout;
