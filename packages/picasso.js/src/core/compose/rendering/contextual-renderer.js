@@ -4,7 +4,7 @@ import { extendAndTransformAttributes } from '../../scene-graph/attributes';
 import { maybeAddGradients } from './svg-gradient';
 
 function ContextualRenderer({ ctx, rect, nodes }) {
-  const { renderContext } = ctx;
+  const { renderer } = ctx;
   if (!nodes || nodes.length === 0) {
     return undefined;
   }
@@ -18,7 +18,7 @@ function ContextualRenderer({ ctx, rect, nodes }) {
     '-moz-osx-font-smoothing': 'antialiased'
   };
 
-  if (renderContext === 'canvas') {
+  if (renderer === 'canvas') {
     return (
       <Canvas
         ctx={ctx}
@@ -45,7 +45,7 @@ function ContextualRenderer({ ctx, rect, nodes }) {
     }
     vNodes.push(vNode);
   });
-  if (renderContext === 'svg') {
+  if (renderer === 'svg') {
     ctx.ns = ctx.ns || 'http://www.w3.org/2000/svg';
     return (
       <svg xmlns={ctx.ns} style={style} width={width} height={height}>

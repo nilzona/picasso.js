@@ -6803,6 +6803,10 @@ postcss@^6.0.21:
     source-map "^0.6.1"
     supports-color "^5.4.0"
 
+preact-render-to-json@^3.6.6:
+  version "3.6.6"
+  resolved "https://registry.yarnpkg.com/preact-render-to-json/-/preact-render-to-json-3.6.6.tgz#f67f48581912ac53fc9f4873bc6d7ce342f71c20"
+
 preact@^8.3.1:
   version "8.3.1"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.3.1.tgz#ed34f79d09edc5efd32a378a3416ef5dc531e3ac"

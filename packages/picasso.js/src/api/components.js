@@ -16,6 +16,10 @@ import lineComponent from '../core/chart-components/line';
 import layoutComponent from '../core/compose/components/layout';
 import brushAreaComponent from '../web/components/brush-area';
 import tooltipComponent from '../web/components/tooltip';
+
+// updated components for compose api
+import composePointComponent from '../core/compose/components/point';
+
 import {
   debugCollider,
   debugPathToPoints
@@ -41,5 +45,6 @@ export default [
   brushAreaComponent,
   tooltipComponent,
   debugCollider,
-  debugPathToPoints
+  debugPathToPoints,
+  composePointComponent
 ];

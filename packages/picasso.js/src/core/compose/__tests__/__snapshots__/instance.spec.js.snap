@@ -15,6 +15,13 @@ Object {
   "componentWillUnmount": [Function],
   "componentWillUpdate": [Function],
   "created": [Function],
+  "ctx": Object {
+    "data": Array [],
+    "formatter": undefined,
+    "logger": undefined,
+    "renderer": "svg",
+    "style": undefined,
+  },
   "destroyed": [Function],
   "getChildren": [Function],
   "getPreferredSize": [Function],
@@ -22,6 +29,7 @@ Object {
   "mounted": [Function],
   "render": [Function],
   "shouldComponentUpdate": [Function],
+  "update": [Function],
   "updated": [Function],
   "visible": true,
 }

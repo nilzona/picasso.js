@@ -52,26 +52,20 @@ describe('picasso.compose function', () => {
     definition.settings.components = [
       {
         type: 'test',
-        components: [
-          {
-            type: 'test'
-          },
-          {
-            type: 'test'
-          }
-        ]
+        components: [{ type: 'test' }, { type: 'test' }]
       }
     ];
-    compose(definition, {
-      registries: {
-        component: () => ({
-        }),
-        data: () => () => ({})
+    compose(
+      definition,
+      {
+        registries: {
+          component: () => ({}),
+          data: () => () => ({})
+        }
       }
-    });
+    );
     // expect something
   });
 });
-
 
 // expect(tree).toMatchSnapshot();

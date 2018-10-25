@@ -1,7 +1,5 @@
 import { h, Component } from 'preact';
 import ContextualRenderer from './rendering/contextual-renderer';
-// import createRendererBox from './rendering/renderer-box';
-// import mapDeprecated from './mapDeprecated';
 
 class ChartComponent extends Component {
   constructor({ instance }) {
@@ -9,25 +7,20 @@ class ChartComponent extends Component {
     this.instance = instance;
   }
 
-  render({ context, children }) {
+  render({ children, instance }) {
     // props, state
-    if (!this.instance.visible) {
+    if (!instance.visible) {
       return undefined;
     }
     if (children && children[0]) {
       return <div>{children}</div>;
     }
     let nodes;
-    if (this.instance.render) {
-      nodes = this.instance.render();
-      const ctx = {
-        renderContext:
-          context.renderer && context.renderer.prio
-            ? context.renderer.prio[0] || 'svg'
-            : 'svg'
-      };
+    if (instance.render) {
+      const ctx = this.instance.ctx;
+      nodes = instance.render(ctx, h);
       return (
-        <ContextualRenderer ctx={ctx} rect={this.instance.rect} nodes={nodes} />
+        <ContextualRenderer ctx={ctx} rect={instance.rect} nodes={nodes} />
       );
     }
     return undefined;

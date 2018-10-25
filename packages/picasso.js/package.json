@@ -48,6 +48,7 @@
     "node-event-emitter": "0.0.1",
     "path2d-polyfill": "0.3.1",
     "preact": "^8.3.1",
+    "preact-render-to-json": "^3.6.6",
     "test-utils": "^0.15.0"
   }
 }

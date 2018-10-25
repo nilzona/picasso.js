@@ -10,7 +10,11 @@ describe('instance', () => {
     sandbox = sinon.createSandbox();
     component = sandbox.stub().returns({});
     data = sandbox.stub();
-    instance = create({}, { registries: { component, data } });
+    instance = create(
+      {},
+      { registries: { component, data } },
+      { theme: { style: () => {} } }
+    );
   });
 
   afterEach(() => {
@@ -35,5 +39,4 @@ describe('instance', () => {
     [c1, c2, c3].map(c => instance.addChild(c));
     expect(instance.getChildren()).to.have.length(3);
   });
-
 });

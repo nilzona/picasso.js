@@ -6,16 +6,22 @@ export function linkFunction(fnName, { source, target }) {
     target = [target];
   }
   target.forEach((t) => {
-    Object.defineProperty(t, fnName, {
-      value(...args) {
-        for (let i = 0; i < source.length; ++i) {
-          if (typeof source[i][fnName] === 'function') {
-            return source[i][fnName].call(source[i], ...args);
-          }
+    let overriden;
+    if (t[fnName]) {
+      overriden = t[fnName];
+    }
+    t[fnName] = (...args) => {
+      for (let i = 0; i < source.length; ++i) {
+        if (typeof source[i][fnName] === 'function') {
+          return source[i][fnName].call(source[i], ...args);
         }
-        return undefined;
       }
-    });
+      // function existed on target but was not overriden, so call it
+      if (overriden) {
+        return overriden.call(target, ...args);
+      }
+      return undefined;
+    };
   });
 }
 
