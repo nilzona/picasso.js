@@ -33,6 +33,27 @@
   },
   "overrides": [
     {
+      "files": ["packages/picasso.js/**/*.js"],
+      "plugins": ["react"],
+      "settings": {
+        "react": {
+          "pragma": "h"
+        }
+      },
+      "rules": {
+        "class-methods-use-this": ["error", { "exceptMethods": ["render"] }],
+        "react/jsx-uses-react": 2,
+        "react/jsx-uses-vars": 2
+      }
+    },
+    {
+      "files": ["packages/picasso.js/src/web/**/!(*.spec).js"],
+      "env": {
+        "browser": true,
+        "node": false
+      }
+    },
+    {
       "files": ["**/*.spec.js", "**/test/**/*.js"],
       "env": {
         "browser": false,
