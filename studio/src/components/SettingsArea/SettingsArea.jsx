@@ -4,9 +4,9 @@ import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
-// import FormGroup from '@material-ui/core/FormGroup';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -39,24 +39,24 @@ const SettingsArea = ({ settings, onSettingsChanged }) => {
     [onSettingsChanged, settings]
   );
 
-  // const { chart, compose } = settings.api;
+  const { chart, compose } = settings.api;
   const { renderer, logger } = settings;
 
   return (
     <Box display="flex" flexGrow={1} flexDirection="column" className={classes.root}>
-      {/* <FormControl className={classes.formControl}>
+      <FormControl className={classes.formControl}>
         <FormLabel>Picasso API&apos;s</FormLabel>
         <FormGroup row>
           <FormControlLabel
-            control={<Checkbox checked={chart} onChange={handleChange} name="api.chart" color="primary" />}
+            control={<Checkbox checked={chart} onChange={handleChange} color="primary" name="api.chart" />}
             label="Chart API"
           />
           <FormControlLabel
-            control={<Checkbox checked={compose} onChange={handleChange} name="api.compose" color="primary" />}
+            control={<Checkbox checked={compose} onChange={handleChange} color="primary" name="api.compose" />}
             label="Compose API"
           />
         </FormGroup>
-      </FormControl> */}
+      </FormControl>
       <Divider />
       <Box display="flex">
         <FormControl className={classes.formControl}>

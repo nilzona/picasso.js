@@ -135,15 +135,27 @@ const CodeArea = ({ selected, codeUpdated }) => {
             </TabPanel>
           </Box>
         </Box>
-        <Box display="flex" className={classes.render}>
-          <RenderingArea
-            key="chart"
-            api="chart"
-            title={renderTitle}
-            code={renderCode}
-            data={renderData}
-            settings={settings}
-          />
+        <Box display="flex" flexDirection="column" className={classes.render}>
+          {settings.api.chart ? (
+            <RenderingArea
+              key="chart"
+              api="chart"
+              title={renderTitle}
+              code={renderCode}
+              data={renderData}
+              settings={settings}
+            />
+          ) : null}
+          {settings.api.compose ? (
+            <RenderingArea
+              key="compose"
+              api="compose"
+              title={renderTitle}
+              code={renderCode}
+              data={renderData}
+              settings={settings}
+            />
+          ) : null}
         </Box>
       </Split>
     </Box>

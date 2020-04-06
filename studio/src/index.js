@@ -24,8 +24,8 @@ const HistoryApp = withRouter(App);
 /* eslint-disable react/jsx-filename-extension */
 ReactDOM.render(
   <Router>
-    <CssBaseLine />
     <ThemeProvider theme={theme}>
+      <CssBaseLine />
       <HistoryApp />
     </ThemeProvider>
   </Router>,
