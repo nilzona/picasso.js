@@ -31,7 +31,7 @@ const compose = (userDefinition, globalContext) => {
     chartInstance.reset();
     chartInstance.layoutComponents();
     // render chart with preact
-    render(chartInstance.vdom, element, element.lastChild);
+    render(chartInstance.vdom, element);
   };
 
   const clearChart = () => {

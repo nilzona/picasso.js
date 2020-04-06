@@ -7,6 +7,7 @@ import { collection as formatterCollection } from '../chart/formatter';
 import { collection as scaleCollection } from '../chart/scales';
 import themeFn from '../theme';
 import { measureText, textBounds } from '../../web/text-manipulation';
+import createRendererBox from '../../web/renderer/renderer-box';
 import createSymbolFactory from '../symbols';
 
 function addComponentDelta(shape, containerBounds, componentBounds) {
@@ -163,10 +164,16 @@ const createChartContext = (context, element) => {
   };
   const measure = context.noBrowser ? notImplemented : measureText;
   const bounds = context.noBrowser ? notImplemented : textBounds;
+  const size = context.noBrowser
+    ? notImplemented
+    : opts => {
+        return createRendererBox(opts);
+      };
 
   chartContext.renderTools = {
     measureText: measure,
     textBounds: bounds,
+    size,
   };
 
   return chartContext;
