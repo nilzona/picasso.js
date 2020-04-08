@@ -36,12 +36,16 @@ return {
   components: [{
     scale: 'y',
     type: 'axis',
-    dock: 'left',
+    layout: {
+      dock: 'left'
+    },
     key: 'y-axis'
   }, {
     type: 'axis',
     scale: 'x',
-    dock: 'bottom',
+    layout: {
+      dock: 'bottom'
+    },
     key: 'x-axis'
   }, {
     key: 'pm',

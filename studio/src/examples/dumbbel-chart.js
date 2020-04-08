@@ -26,11 +26,15 @@ return {
     y: 'y'
   },{
     type: 'axis',
-    dock: 'left',
+    layout: {
+      dock: 'left'
+    },
     scale: 'y'
   },{
     type: 'axis',
-    dock: 'bottom',
+    layout: {
+      dock: 'bottom'
+    },
     scale: 'v'
   },{
     key: 'bars',

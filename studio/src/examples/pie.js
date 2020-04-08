@@ -78,7 +78,9 @@ return {
     {
       type: 'legend-cat',
       scale: 'color',
-      dock: 'right',
+      layout: {
+        dock: 'right'
+      },
       brush: {
         trigger: [{
           on: 'tap',

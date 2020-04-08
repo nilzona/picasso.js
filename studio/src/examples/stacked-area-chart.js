@@ -32,11 +32,15 @@ return {
   },
   components: [{
     type: 'axis',
-    dock: 'left',
+    layout: {
+      dock: 'left'
+    },
     scale: 'y'
   },{
     type: 'axis',
-    dock: 'bottom',
+    layout: {
+      dock: 'bottom'
+    },
     scale: 't'
   }, {
     key: 'lines',

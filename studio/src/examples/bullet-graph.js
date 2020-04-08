@@ -60,11 +60,15 @@ return {
     },
     components: [{
       type: 'axis',
-      dock: 'left',
+      layout: {
+        dock: 'left'
+      },
       scale: 'y'
     },{
       type: 'axis',
-      dock: 'bottom',
+      layout: {
+        dock: 'bottom'
+      },
       scale: 'v'
     },
       box({ start: 0, end: 1000, width: 0.8, fill: '#eee' }),

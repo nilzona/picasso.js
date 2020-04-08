@@ -23,16 +23,22 @@ return {
     key: 'y-axis',
     type: 'axis',
     scale: 's',
-    dock: 'left'
+    layout: {
+      dock: 'left'
+    }
   }, {
     type: 'legend-cat',
-    dock: 'right',
+    layout: {
+      dock: 'right'
+    },
     scale: 'col'
   }, {
     key: 'x-axis',
     type: 'axis',
     scale: 'm',
-    dock: 'bottom'
+    layout: {
+      dock: 'bottom'
+    }
   }, {
     key: 'p',
     type: 'point',

@@ -17,7 +17,7 @@ const compose = (userDefinition, globalContext) => {
   const chartContext = createChartContext(globalContext, element);
   chartContext.update(userDefinition);
 
-  const chartInstance = synthesize(userDefinition, globalContext, chartContext);
+  let chartInstance = synthesize(userDefinition, globalContext, chartContext);
   chartContext.setRootInstance(chartInstance);
 
   const renderChart = () => {
@@ -38,6 +38,8 @@ const compose = (userDefinition, globalContext) => {
     render(null, element, element.lastChild);
   };
 
+  const chart = {};
+
   const update = updatedUserDefinition => {
     if (updatedUserDefinition) {
       chartContext.update(updatedUserDefinition);
@@ -51,13 +53,20 @@ const compose = (userDefinition, globalContext) => {
   };
 
   const destroy = () => {
-    // clean up
-    clearChart();
-    chartInstance.destroy();
+    if (chartInstance) {
+      // clean up
+      clearChart();
+      chartInstance.destroy();
+      delete chart.update;
+      chartInstance = null;
+    }
   };
 
   renderChart();
-  return { update, destroy };
+
+  chart.update = update;
+  chart.destroy = destroy;
+  return chart;
 };
 
 export default compose;
